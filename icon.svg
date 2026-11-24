@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#3730a3"/>
+  <g transform="rotate(-45 256 256)" fill="#fff">
+    <rect x="156" y="226" width="200" height="60" rx="14"/>
+    <circle cx="150" cy="220" r="42"/><circle cx="150" cy="292" r="42"/>
+    <circle cx="362" cy="220" r="42"/><circle cx="362" cy="292" r="42"/>
+  </g>
+  <text x="256" y="452" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="700" fill="#c7d2fe">ANAT</text>
+</svg>
