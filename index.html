@@ -1,0 +1,1485 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#3730a3">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Révisions anat">
+<title>Révisions anat</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--body0:#e6dcc8;--bodyline:#8e94b3;--bg:#f4f5fb;--card:#fff;--ink:#1c1f33;--muted:#606680;--accent:#3730a3;--accent-soft:#e6e5fb;--line:#dfe1ee;--ok:#15803d;--ok-bg:#dcfce7;--ko:#b91c1c;--ko-bg:#fee2e2;--todo:#c9ccdc;--on-accent:#fff;--head:#3730a3}
+@media (prefers-color-scheme: dark){:root{--body0:#6b6254;--bodyline:#8a90b0;--bg:#12131c;--card:#1c1e2b;--ink:#e8e9f3;--muted:#a3a7c0;--accent:#a5b4fc;--accent-soft:#2a2d49;--line:#2e3146;--ok:#4ade80;--ok-bg:#163322;--ko:#f87171;--ko-bg:#3a1a1a;--todo:#3a3d55;--on-accent:#11132a;--head:#2b2780}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);padding-bottom:env(safe-area-inset-bottom)}
+header{position:sticky;top:0;z-index:5;background:var(--head);color:#fff;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top));display:flex;align-items:center;gap:6px}
+header h1{font-size:1.02rem;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header a{color:#fff;text-decoration:none;font-size:1.18rem;padding:4px 7px;border-radius:8px;line-height:1}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 12px 4px;scrollbar-width:none;max-width:760px;margin:0 auto}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs a{flex:0 0 auto;padding:8px 13px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;font-size:.92rem;white-space:nowrap}
+nav.tabs a.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:600}
+main{max-width:760px;margin:0 auto;padding:10px 12px 28px}
+h2{font-size:1.1rem;margin:0 0 6px}
+p{margin:6px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.small{font-size:.86rem;color:var(--muted)}
+.stack{display:flex;height:12px;border-radius:99px;overflow:hidden;background:var(--todo);margin:10px 0 6px}
+.stack div{height:100%}
+.stack .g{background:var(--ok)} .stack .r{background:var(--ko)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.82rem;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.big{font-size:1.02rem;font-weight:600;margin:2px 0 0}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 2px}
+.chips button{font:inherit;font-size:.85rem;padding:6px 11px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.chips button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+.pools{display:grid;gap:10px}
+.pool{display:flex;align-items:center;gap:12px;width:100%;text-align:left;font:inherit;color:inherit;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--todo);border-radius:14px;padding:14px;cursor:pointer}
+.pool.ko{border-left-color:var(--ko)} .pool.ok{border-left-color:var(--ok)} .pool.todo{border-left-color:var(--accent)}
+.pool:disabled{opacity:.5;cursor:default}
+.pool .n{font-size:1.5rem;font-weight:700;min-width:3.2ch;text-align:right}
+.pool .t{flex:1}
+.pool .t b{display:block;font-size:1rem}
+.range{display:flex;align-items:center;gap:10px;margin-top:6px}
+.range input{flex:1;accent-color:var(--accent)}
+.range output{min-width:4.5ch;text-align:right;font-weight:600}
+button,.btn{font:inherit;padding:10px 14px;border-radius:11px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;text-decoration:none;display:inline-block}
+button.primary,.btn.primary{background:var(--accent);color:var(--on-accent)}
+button.danger{border-color:var(--ko);color:var(--ko)}
+button.sm{padding:6px 10px;font-size:.82rem;border-radius:9px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.qhead{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.tag{display:inline-block;font-size:.78rem;padding:3px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent);font-weight:600}
+.qtext{font-size:1.08rem;font-weight:600;line-height:1.45;margin:12px 0 4px}
+.opts{display:grid;gap:8px;margin-top:12px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;font:inherit;font-size:.97rem;line-height:1.4;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px;cursor:pointer}
+.opt .k{flex:0 0 auto;width:1.7em;height:1.7em;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.85rem}
+.opt.good{border-color:var(--ok);background:var(--ok-bg)} .opt.good .k{background:var(--ok);color:#fff}
+.opt.bad{border-color:var(--ko);background:var(--ko-bg)} .opt.bad .k{background:var(--ko);color:#fff}
+.opt:disabled{cursor:default;opacity:1}
+.opt.dim{opacity:.55}
+.verdict{font-weight:700;font-size:1.05rem;margin:14px 0 4px}
+.verdict.ok{color:var(--ok)} .verdict.ko{color:var(--ko)}
+.pet-say{display:flex;align-items:center;gap:10px;margin-top:10px;padding:9px 12px;border-radius:12px;background:var(--bg);border:1px solid var(--line);font-size:.92rem;animation:pop .45s}
+.pet-say .av{font-size:1.45rem;flex:0 0 auto}
+.expl{background:var(--bg);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:.93rem;line-height:1.5}
+details{margin-top:10px}
+summary{cursor:pointer;color:var(--accent);font-weight:600}
+.facts{margin:8px 0 0;padding:0;list-style:none}
+.facts li{padding:7px 0;border-top:1px solid var(--line);font-size:.92rem;line-height:1.45}
+.facts li b{display:block;font-size:.8rem;color:var(--muted);font-weight:600}
+input[type=search]{font:inherit;width:100%;padding:11px 12px;border-radius:11px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.list a{display:flex;justify-content:space-between;gap:8px;padding:11px 4px;border-top:1px solid var(--line);color:inherit;text-decoration:none}
+.list a:first-child{border-top:0}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-left:3px}
+.msg{min-height:1.2em;font-size:.9rem;color:var(--muted);margin-top:8px}
+.flag{font-size:.85rem;padding:7px 11px;border-color:var(--line);color:var(--muted)}
+.flag.on{border-color:var(--ko);color:var(--ko)}
+.hidden{display:none !important}
+.pics{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-top:10px}
+.pics.big{grid-template-columns:1fr}
+img.pic{width:100%;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:zoom-in;min-height:60px}
+#zoom{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:20;display:flex;align-items:center;justify-content:center;padding:10px}
+#zoom img{max-width:100%;max-height:100%;border-radius:6px;background:#fff}
+.levels{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px;margin-top:8px}
+.levels a{display:block;text-align:center;padding:9px 0;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;font-weight:600;font-size:.9rem}
+.levels a.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.subtabs{display:flex;gap:6px;margin:10px 0;flex-wrap:wrap}
+.subtabs a{flex:1 1 auto;text-align:center;padding:9px 10px;border-radius:10px;border:1px solid var(--line);color:var(--ink);text-decoration:none;background:var(--card);font-size:.9rem}
+.subtabs a.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:700}
+.palpa{border-left:4px solid var(--accent);padding:6px 0 6px 10px;margin-top:10px}
+.revbtn{display:block;text-align:center;margin-top:12px}
+nav.tabs a.on .small{color:inherit;opacity:.85}
+.opt.sel{border-color:var(--accent,#2563eb);box-shadow:inset 0 0 0 1px var(--accent,#2563eb)}
+figure.web{margin:10px 0}figure.web img{max-height:340px;width:auto;max-width:100%;background:#fff}figure.web figcaption{overflow-wrap:anywhere}
+.lvcard{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.lvrow{display:flex;gap:12px;align-items:center}
+.lvbadge{flex:0 0 auto;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:1.25rem;background:linear-gradient(135deg,#fef3c7,#facc15 55%,#ca8a04);color:#713f12;box-shadow:0 2px 8px rgba(202,138,4,.35)}
+.lvcard .t b,.lvrow .t b{display:block}
+.xpbar{height:8px;border-radius:99px;background:var(--todo);overflow:hidden;margin-top:6px}
+.xpbar div{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),#facc15)}
+.joybar{height:9px;border-radius:99px;background:var(--todo);overflow:hidden;margin-top:6px}
+.joybar div{height:100%;border-radius:99px;background:linear-gradient(90deg,#f59e0b,#22c55e)}
+.bodywrap{display:flex;justify-content:center;align-items:flex-end;gap:10px;flex-wrap:wrap;margin:4px 0 8px;border-radius:14px;padding:12px;position:relative;overflow:hidden;border:1px solid var(--line)}
+.bodywrap.scene-none{background:var(--bg)}
+.bodywrap.scene-sun{background:linear-gradient(180deg,#bae6fd 0%,#fef9c3 100%)}
+.bodywrap.scene-cloud{background:linear-gradient(180deg,#cbd5e1 0%,#e2e8f0 100%)}
+.bodywrap.scene-storm{background:linear-gradient(180deg,#334155 0%,#1e293b 100%)}
+.bodywrap.scene-rainbow{background:linear-gradient(180deg,#e0f2fe 0%,#fce7f3 55%,#fef3c7 100%)}
+.bodywrap.scene-night{background:linear-gradient(180deg,#0f172a 0%,#312e81 100%)}
+.scene-badge{position:absolute;top:8px;right:10px;font-size:1.5rem;pointer-events:none;z-index:1}
+.bodywrap svg{height:min(54vh,460px);width:auto;max-width:100%;overflow:visible;position:relative;z-index:2}
+.pet-box{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:145px;max-width:210px;padding:10px;border-radius:12px;background:rgba(255,255,255,.86);border:1px solid var(--line);z-index:2;text-align:center;color:var(--ink)}
+@media (prefers-color-scheme: dark){.pet-box{background:rgba(28,30,43,.88)}}
+.pet-family{display:flex;align-items:flex-end;justify-content:center;gap:6px}
+.pet-art{font-size:2.3rem;line-height:1.1}
+.pet-baby{font-size:1.45rem;line-height:1.1}
+.pet-name{font-size:.82rem;font-weight:700;margin-top:4px}
+.pet-gear{font-size:.74rem;color:var(--muted);margin-top:2px}
+.bz{cursor:pointer;stroke:var(--bodyline);stroke-width:1.1;transition:fill .45s}
+.bz:active{opacity:.75}
+.acc{pointer-events:none}
+.sel *{fill:none;stroke:var(--accent);stroke-width:2.6}
+.rewards{display:grid;gap:8px;margin-top:12px;max-height:380px;overflow-y:auto}
+.rw{display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.rw .ico{font-size:1.5rem;width:1.7em;text-align:center}
+.rw .t{flex:1}.rw .t b{display:block;font-size:.93rem}
+.list .ics{letter-spacing:1px}
+.xp{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:99px;background:linear-gradient(90deg,#fef3c7,#facc15);color:#713f12;font-size:.85rem;vertical-align:1px;animation:pop .5s}
+.streak{display:inline-block;margin-left:6px;font-size:.88rem;color:#ea580c;font-weight:600}
+.unlock{display:flex;gap:12px;align-items:center;margin-top:10px;padding:11px 13px;border-radius:12px;background:linear-gradient(135deg,#fef3c7,#fde68a);color:#713f12;text-decoration:none;font-size:1.6rem;animation:pop .6s}
+.unlock.animal{background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#14532d}
+.unlock.daily{background:linear-gradient(135deg,#e0e7ff,#c7d2fe);color:#1e1b4b}
+.unlock span{font-size:.95rem}.unlock b{display:block}.unlock .small{color:inherit;opacity:.85}
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:10px}
+.mcard{border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--bg);display:flex;flex-direction:column;justify-content:space-between;gap:8px}
+.mcard.comp{border-color:var(--ok);background:var(--ok-bg)}
+.mcard .top{display:flex;gap:8px;align-items:center}
+.mcard .em{font-size:1.8rem}
+.mcard b{display:block;font-size:.92rem}
+.art-frame{border:3px solid #92400e;border-radius:10px;padding:10px;background:linear-gradient(135deg,#fef3c7,#fffbeb);color:#1c1f33;margin-top:8px}
+@media (prefers-color-scheme: dark){.art-frame{background:#292524;color:#f5f5f4;border-color:#d97706}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+</style>
+</head>
+<body>
+<header>
+  <a href="#/g" aria-label="Accueil">⌂</a>
+  <h1 id="title">Révisions anat</h1>
+  <a href="#/corps" aria-label="Mon corps d'anat">🧍</a>
+  <a href="#/menagerie" aria-label="La ménagerie">🐾</a>
+  <a href="#/fiches" aria-label="Fiches">🔎</a>
+  <a href="#/reglages" aria-label="Réglages">⚙</a>
+</header>
+<nav class="tabs" id="tabs"></nav>
+<main id="app"><div class="card">Chargement des questions…</div></main>
+
+<script src="questions.js"></script>
+<script>
+"use strict";
+const D = window.QDATA || { questions: [], fiches: {}, sources: {}, regions: {} };
+const QS = D.questions;
+const BY_ID = Object.fromEntries(QS.map(q => [q.id, q]));
+const TABS = [
+  { id: "g", label: "Général", cat: null },
+  { id: "muscle", label: "Muscles", cat: "muscle" },
+  { id: "nerf", label: "Nerfs", cat: "nerf" },
+  { id: "ligament", label: "Ligaments", cat: "ligament" },
+  { id: "artic", label: "Articulations", cat: "artic" },
+  { id: "os", label: "Os", cat: "os" },
+  { id: "autre", label: "Autres", cat: "autre" },
+  { id: "palpa", label: "Palpation", cat: "palpa" }
+];
+const POOLS = {
+  ko: { label: "Échecs", hint: "Les QCM où tu t'es trompée la dernière fois" },
+  todo: { label: "Structures pas encore interrogées", hint: "Les QCM que tu n'as encore jamais faits" },
+  ok: { label: "Déjà eu bon", hint: "Les QCM réussis la dernière fois" }
+};
+const REG_LABEL = { all: "Tout", ms: "Membre sup.", mi: "Membre inf.", ax: "Tête, cou, tronc" };
+const CAT_LABEL = { muscle: "Muscle", nerf: "Nerf", ligament: "Ligament", artic: "Articulation", os: "Os", autre: "Autre", palpa: "Palpation" };
+const CAT_PLURAL = { muscle: "Muscles", nerf: "Nerfs", ligament: "Ligaments", artic: "Articulations", os: "Os", autre: "Autres", palpa: "Palpation" };
+
+const PACKS = {};
+function loadPack(p) {
+  return PACKS[p] || (PACKS[p] = new Promise((res, rej) => {
+    const s = document.createElement("script");
+    s.src = p + ".js";
+    s.onload = res; s.onerror = () => { delete PACKS[p]; rej(new Error("image indisponible")); };
+    document.head.appendChild(s);
+  }));
+}
+const imgTags = keys => (keys || []).filter(k => D.imgs && D.imgs[k]).map(k => `<img class="pic" data-k="${esc(k)}" alt="Image du cours" loading="lazy">`).join("");
+const webImg = f => !f || !f.web || !D.imgs[f.web[0]] ? "" : `<figure class="web"><div class="pics">${imgTags([f.web[0]])}</div><figcaption class="small">${f.web[1] ? "Planche d'ensemble de la région ou de l'os : la structure n'y est pas toujours légendée. " : ""}Image ajoutée (hors cours) · Wikimedia Commons : <a href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent((D.imgCap[f.web[0]] || "").split(" – ")[0])}" target="_blank" rel="noopener">${esc(D.imgCap[f.web[0]] || "")}</a></figcaption></figure>`;
+function hydrateImgs() {
+  document.querySelectorAll("img.pic[data-k]:not([src])").forEach(el => {
+    if (el.closest("details:not([open])")) return;
+    const k = el.dataset.k, p = D.imgs[k];
+    if (!p) return;
+    loadPack(p).then(() => { if (window.IMGP && IMGP[k]) el.src = IMGP[k]; }).catch(() => { el.alt = navigator.onLine ? "Image absente du site : fichier " + p + ".js introuvable sur GitHub" : "Image indisponible hors ligne (jamais affichée)"; });
+  });
+}
+
+const K_PROG = "revanat-progress-v1", K_SET = "revanat-settings-v1", K_FLAG = "revanat-flags-v1";
+const load = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { return false; } };
+let PROG = load(K_PROG, {});
+let SET = load(K_SET, { reg: "all", len: 20 });
+let FLAGS = load(K_FLAG, {});
+const K_OVR = "revanat-corrections-v1"; let OVR = load(K_OVR, {});
+const applyOvr = () => { for (const id in OVR) { const q = BY_ID[id]; if (q) { q.q = OVR[id].q; q.a = OVR[id].a; if (q.m) { q.m = q.a.split(" ; "); q.d = q.d.filter(x => !q.m.includes(x)); } else q.d = q.d.filter(x => x !== q.a); } } };
+applyOvr();
+
+const K_WLAST = "revanat-widget-last-v1";
+function qsHash() {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < QS.length; i++) { const s = (i ? "\n" : "") + QS[i].id; for (let j = 0; j < s.length; j++) { h ^= s.charCodeAt(j); h = Math.imul(h, 0x01000193) >>> 0; } }
+  return h >>> 0;
+}
+function widgetLink() {
+  const bytes = new Uint8Array(Math.ceil(QS.length / 8));
+  QS.forEach((q, i) => { if (PROG[q.id]) bytes[i >> 3] |= 1 << (i & 7); });
+  let bin = ""; bytes.forEach(b => { bin += String.fromCharCode(b); });
+  const d = btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  const back = location.href.split("#")[0] + "#/widget";
+  return `intent://sync?h=${qsHash()}&w=${load(K_WLAST, 0)}&d=${d}#Intent;scheme=revanat;package=fr.jadanat.revwidget;S.browser_fallback_url=${encodeURIComponent(back)};end`;
+}
+function importWidget(payload) {
+  if (!payload) return "";
+  let data;
+  try { data = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(payload.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0)))); }
+  catch { return "Lien du widget illisible."; }
+  const last = load(K_WLAST, 0); let max = last, n = 0, ok = 0;
+  for (const [id, r, t] of (data.r || [])) {
+    if (!BY_ID[id] || !(t > last)) continue;
+    const p = PROG[id] || { n: 0, ok: 0 };
+    p.n++; if (r) p.ok++;
+    if (!(p.t > t)) { p.r = r ? 1 : 0; p.t = t; }
+    PROG[id] = p; n++; if (r) ok++; if (t > max) max = t;
+  }
+  save(K_PROG, PROG); save(K_WLAST, max);
+  const fresh = syncUnlocks();
+  if (fresh.length) return `✔ ${plural(n, "réponse")} du widget enregistrée(s). 🎁 Débloqué : ${fresh.map(r => r.ico + " " + r.name).join(", ")} ! (voir 🧍 Mon corps)`;
+  return n ? `✔ ${plural(n, "réponse")} du widget ${n > 1 ? "enregistrées" : "enregistrée"} : ${ok} dans « Déjà eu bon », ${n - ok} dans « Échecs ».` : "Ces réponses du widget étaient déjà enregistrées.";
+}
+const widgetBtn = () => `<a class="btn primary" href="${esc(widgetLink())}">📲 Mettre à jour le widget</a>`;
+function viewWidget() {
+  const msg = MSG; MSG = "";
+  return `<section class="card"><h2>📲 Widget Android</h2>
+      ${msg ? `<p class="big">${esc(msg)}</p>` : ""}
+      <p class="small">Touche « Mettre à jour le widget » : il saura quels QCM tu as déjà faits ici et ne te proposera que des structures pas encore interrogées.</p>
+      <div class="actions">${widgetBtn()}<a class="btn" href="#/g">Accueil</a></div></section>`;
+}
+let SESSION = null;
+let MSG = "";
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const $ = s => document.querySelector(s);
+const status = q => { const p = PROG[q.id]; return !p ? "todo" : p.r ? "ok" : "ko"; };
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const plural = (n, s, p) => `${n} ${n > 1 ? (p || s + "s") : s}`;
+const cap = s => { s = String(s ?? ""); return s.charAt(0).toUpperCase() + s.slice(1); };
+const srcText = src => src ? `${D.sources[src[0]] || src[0]}, page ${src[1]} du PDF` : "";
+
+function todayKey(offsetDays = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function questionsOf(tab, reg = SET.reg) {
+  const t = TABS.find(x => x.id === tab);
+  return QS.filter(q => (!t || !t.cat || q.c === t.cat) && (reg === "all" || q.r === reg));
+}
+function stats(list) {
+  let ok = 0, ko = 0;
+  for (const q of list) { const s = status(q); if (s === "ok") ok++; else if (s === "ko") ko++; }
+  return { total: list.length, ok, ko, done: ok + ko, todo: list.length - ok - ko };
+}
+const pct = (a, b) => b ? (a / b * 100) : 0;
+
+const K_DAILY = "revanat-daily-v2";
+const DAILY_REWARDS = [
+  { id: "art-joconde", cat: "tableau", ico: "🖼️", name: "La Joconde", artist: "Léonard de Vinci", desc: "Le sourire énigmatique du Louvre." },
+  { id: "art-nuit", cat: "tableau", ico: "🌌", name: "La Nuit étoilée", artist: "Vincent van Gogh", desc: "Tourbillons célestes et cyprès nocturnes." },
+  { id: "art-perle", cat: "tableau", ico: "💎", name: "La Jeune Fille à la perle", artist: "Johannes Vermeer", desc: "Lumière douce et éclat de perle." },
+  { id: "art-cri", cat: "tableau", ico: "😱", name: "Le Cri", artist: "Edvard Munch", desc: "Ciel flamboyant sur le fjord." },
+  { id: "art-tournesols", cat: "tableau", ico: "🌻", name: "Les Tournesols", artist: "Vincent van Gogh", desc: "Jaunes solaires pleins de vitalité." },
+  { id: "art-vague", cat: "tableau", ico: "🌊", name: "La Grande Vague de Kanagawa", artist: "Hokusai", desc: "L'écume face au mont Fuji." },
+  { id: "art-naissance", cat: "tableau", ico: "🐚", name: "La Naissance de Vénus", artist: "Sandro Botticelli", desc: "Brise printanière et coquillage doré." },
+  { id: "art-nymphs", cat: "tableau", ico: "🪷", name: "Les Nymphéas", artist: "Claude Monet", desc: "Reflets paisibles sur le bassin." },
+  { id: "hair-bun", cat: "coiffure", ico: "🍡", name: "Chignon haut", desc: "Coiffure relevée stylée pour ton personnage." },
+  { id: "hair-ponytail", cat: "coiffure", ico: "🎀", name: "Queue de cheval", desc: "Pratique pour réviser à toute vitesse." },
+  { id: "hair-spiky", cat: "coiffure", ico: "⚡", name: "Mèche rebelle", desc: "Look dynamique et plein d'énergie." },
+  { id: "hair-bob", cat: "coiffure", ico: "✂️", name: "Carré flou", desc: "Coupe nette et élégante." },
+  { id: "scene-sun", cat: "decor", ico: "☀️", name: "Soleil radieux", scene: "sun", desc: "Un fond ensoleillé et lumineux." },
+  { id: "scene-cloud", cat: "decor", ico: "☁️", name: "Nuage doux", scene: "cloud", desc: "Ambiance nuageuse apaisante." },
+  { id: "scene-storm", cat: "decor", ico: "⛈️", name: "Éclair d'orage", scene: "storm", desc: "Ciel électrique de championne." },
+  { id: "scene-rainbow", cat: "decor", ico: "🌈", name: "Arc-en-ciel", scene: "rainbow", desc: "Couleurs vives derrière ton personnage." },
+  { id: "scene-night", cat: "decor", ico: "🌙", name: "Nuit étoilée", scene: "night", desc: "Révisions nocturnes sous les étoiles." },
+  { id: "gear-wheel", cat: "animal_gear", ico: "🎡", name: "Roue d'entraînement", desc: "Pour courir des kilomètres sans bouger." },
+  { id: "gear-basket", cat: "animal_gear", ico: "🧺", name: "Panier douillet", desc: "Un coin moelleux pour se reposer." },
+  { id: "gear-perch", cat: "animal_gear", ico: "🪶", name: "Perchoir royal", desc: "Pour observer depuis les hauteurs." },
+  { id: "gear-bowl", cat: "animal_gear", ico: "🫧", name: "Bocal corail", desc: "Décor aquatique plein de bulles." },
+  { id: "gear-sabre", cat: "animal_gear", ico: "✨", name: "Sabre lumineux", desc: "Un accessoire mystique pour compagnon intrépide." },
+  { id: "gear-helmet", cat: "animal_gear", ico: "🪐", name: "Casque spatial", desc: "Prêt pour les orbites anatomiques." },
+  { id: "gear-crown-pet", cat: "animal_gear", ico: "👑", name: "Mini couronne", desc: "Pour sacrer ton compagnon d'étude." },
+  { id: "gear-scarf-pet", cat: "animal_gear", ico: "🧣", name: "Écharpe d'hiver", desc: "Douce et chaude pendant les révisions." },
+  { id: "gear-leaf", cat: "animal_gear", ico: "🍃", name: "Feuille fraîche", desc: "Parfaite pour grignoter en paix." },
+  { id: "gear-bell", cat: "animal_gear", ico: "🔔", name: "Clochette dorée", desc: "Tintement discret à chaque bonne réponse." },
+  { id: "gear-cushion", cat: "animal_gear", ico: "🛋️", name: "Coussin nuage", desc: "Ultra confortable pour faire la sieste." },
+  { id: "gear-lantern", cat: "animal_gear", ico: "🏮", name: "Lanterne de bureau", desc: "Éclaire les nuits de révision." }
+];
+const DAILY_BY_ID = Object.fromEntries(DAILY_REWARDS.map(r => [r.id, r]));
+
+let DAILY = load(K_DAILY, {
+  streak: 0,
+  lastActiveDay: null,
+  todayKey: todayKey(),
+  todayGood: 0,
+  todayRewardClaimed: false,
+  kibbleEarnedToday: false,
+  kibbles: 0,
+  got: [],
+  equipped: { coiffure: null, decor: null, animal_gear: null, tableau: null }
+});
+
+function syncDailyState() {
+  const tk = todayKey();
+  if (DAILY.todayKey !== tk) {
+    if (DAILY.lastActiveDay !== todayKey(-1) && DAILY.lastActiveDay !== tk) {
+      DAILY.streak = 0;
+    }
+    DAILY.todayKey = tk;
+    DAILY.todayGood = 0;
+    DAILY.todayRewardClaimed = false;
+    DAILY.kibbleEarnedToday = false;
+    save(K_DAILY, DAILY);
+  }
+}
+syncDailyState();
+
+function recordDailyGoodAnswer() {
+  syncDailyState();
+  const tk = todayKey();
+  if (DAILY.lastActiveDay !== tk) {
+    if (DAILY.lastActiveDay === todayKey(-1)) DAILY.streak += 1;
+    else DAILY.streak = 1;
+    DAILY.lastActiveDay = tk;
+  }
+  DAILY.todayGood += 1;
+  let newReward = null;
+  let gotKibble = false;
+
+  if (DAILY.todayGood >= 5 && !DAILY.kibbleEarnedToday) {
+    DAILY.kibbleEarnedToday = true;
+    DAILY.kibbles = (DAILY.kibbles || 0) + 1;
+    gotKibble = true;
+  }
+  if (DAILY.todayGood >= 5 && !DAILY.todayRewardClaimed) {
+    DAILY.todayRewardClaimed = true;
+    const pool = DAILY_REWARDS.filter(r => !DAILY.got.includes(r.id));
+    if (pool.length) {
+      newReward = pool[Math.floor(Math.random() * pool.length)];
+      DAILY.got.push(newReward.id);
+      if (!DAILY.equipped[newReward.cat]) DAILY.equipped[newReward.cat] = newReward.id;
+    }
+  }
+  save(K_DAILY, DAILY);
+  return { newReward, gotKibble };
+}
+
+const K_PET = "revanat-pet-v2";
+const ANIMAL_COLORS = [
+  { label: "Blanc neige", em: "🤍" },
+  { label: "Noir jais", em: "🖤" },
+  { label: "Roux doré", em: "🧡" },
+  { label: "Gris perle", em: "🩶" },
+  { label: "Bleu ciel", em: "🩵" },
+  { label: "Rose pastel", em: "🩷" },
+  { label: "Jaune canari", em: "💛" },
+  { label: "Violet lavande", em: "💜" },
+  { label: "Vert menthe", em: "💚" },
+  { label: "Caramel", em: "🤎" }
+];
+const CAT_VARIANTS = [
+  ["Chat tigré roux", "🐈"], ["Chat noir curieux", "🐈‍⬛"], ["Chaton blanc assis", "🐱"],
+  ["Chat calico joueur", "🧶"], ["Chat gris endormi", "😴"], ["Chat siamois élégant", "✨"],
+  ["Chat bondissant", "🐾"], ["Chat british bleu", "💙"], ["Chat roux qui ronronne", "🧡"],
+  ["Chat ninja furtif", "🌙"]
+];
+const DOG_VARIANTS = [
+  ["Golden retriever joyeux", "🐕"], ["Chien noir fidèle", "🐕‍⬛"], ["Chiot mignon", "🐶"],
+  ["Corgi aux grandes oreilles", "🦊"], ["Husky des neiges", "❄️"], ["Teckel intrépide", "🌭"],
+  ["Dalmatien tacheté", "⚪"], ["Berger attentif", "⭐"], ["Bouledogue rigolo", "😄"],
+  ["Chien sauteur", "🎾"]
+];
+const SPECIAL_HAMSTERS = [
+  ["hamster-jedi", "Hamster Jedi", "🐹", "⚔️"],
+  ["hamster-ninja", "Hamster Ninja", "🐹", "🥷"],
+  ["hamster-astronaute", "Hamster Astronaute", "🐹", "🚀"],
+  ["hamster-chevalier", "Hamster Chevalier", "🐹", "🛡️"],
+  ["hamster-pirate", "Hamster Pirate", "🐹", "🏴‍☠️"],
+  ["hamster-mage", "Hamster Mage", "🐹", "🧙"],
+  ["hamster-explorateur", "Hamster Explorateur", "🐹", "🧭"],
+  ["hamster-roi", "Hamster Roi", "🐹", "👑"],
+  ["hamster-glace", "Hamster Glace", "🐹", "🍧"],
+  ["hamster-citron", "Hamster Citron", "🐹", "🍋"]
+];
+
+function buildAnimalsCatalog() {
+  const list = [];
+  CAT_VARIANTS.forEach(([name, em], i) => list.push({ id: `chat-${i + 1}`, species: "Chat", name, em, family: "chat" }));
+  DOG_VARIANTS.forEach(([name, em], i) => list.push({ id: `chien-${i + 1}`, species: "Chien", name, em, family: "chien" }));
+
+  const multi = [
+    ["oiseau", "Oiseau", "🐦"],
+    ["hamster", "Hamster", "🐹"],
+    ["serpent", "Serpent", "🐍"],
+    ["lapin", "Lapin", "🐇"]
+  ];
+  for (const [key, sp, baseEm] of multi) {
+    ANIMAL_COLORS.forEach((col, i) => {
+      list.push({ id: `${key}-${i + 1}`, species: sp, name: `${sp} ${col.label.toLowerCase()}`, em: `${baseEm}${col.em}`, family: key });
+    });
+  }
+
+  for (const [id, name, baseEm, badge] of SPECIAL_HAMSTERS) {
+    list.push({ id, species: "Hamster", name, em: `${baseEm}${badge}`, family: "hamster" });
+  }
+
+  const singles = [
+    ["furet", "Furet", "🦦", "furet"],
+    ["crocodile", "Crocodile", "🐊", "crocodile"],
+    ["pigeon", "Pigeon", "🕊️", "pigeon"],
+    ["poisson", "Poisson dans son bocal", "🐠", "poisson"],
+    ["ecureuil", "Écureuil", "🐿️", "ecureuil"],
+    ["ornithorynque", "Ornithorynque", "🦆", "ornithorynque"],
+    ["herisson", "Hérisson", "🦔", "herisson"],
+    ["renard", "Renard", "🦊", "renard"],
+    ["chouette", "Chouette", "🦉", "chouette"],
+    ["tortue", "Tortue", "🐢", "tortue"],
+    ["capybara", "Capybara", "🦫", "capybara"],
+    ["axolotl", "Axolotl", "🦎", "axolotl"],
+    ["loutre", "Loutre", "🦦", "loutre"],
+    ["cameleon", "Caméléon", "🦎", "cameleon"],
+    ["paresseux", "Paresseux", "🦥", "paresseux"],
+    ["panda-roux", "Panda roux", "🐼", "panda-roux"],
+    ["pingouin", "Pingouin", "🐧", "pingouin"],
+    ["koala", "Koala", "🐨", "koala"],
+    ["phoque", "Phoque", "🦭", "phoque"],
+    ["herisson-arc-en-ciel", "Hérisson arc-en-ciel", "🌈", "herisson"]
+  ];
+  for (const [id, name, em, family] of singles) {
+    list.push({ id, species: name, name, em, family });
+  }
+  return list;
+}
+
+const ANIMALS = buildAnimalsCatalog();
+const ANIMAL_BY_ID = Object.fromEntries(ANIMALS.map(a => [a.id, a]));
+const randomTarget = () => 5 + Math.floor(Math.random() * 56);
+
+let PET = load(K_PET, {
+  got: [],
+  companion: null,
+  targetGood: randomTarget(),
+  goodSincePet: 0,
+  dayKey: todayKey(),
+  dayCount: 0,
+  care: {}
+});
+PET.care ||= {};
+
+function petCare(id) {
+  if (!id) return { happiness: 0, fedDays: 0, lastFedDay: null, babyId: null };
+  PET.care[id] ||= { happiness: 0, fedDays: 0, lastFedDay: null, babyId: null };
+  return PET.care[id];
+}
+
+function findBabyForParent(parent) {
+  const sameFamily = ANIMALS.filter(a => a.family === parent.family && a.id !== parent.id && !PET.got.includes(a.id));
+  const pool = sameFamily.length ? sameFamily : ANIMALS.filter(a => !PET.got.includes(a.id));
+  return pool.length ? pool[Math.floor(Math.random() * pool.length)] : null;
+}
+
+function feedCompanionKibble() {
+  syncDailyState();
+  const compId = PET.companion;
+  if (!compId) return { ok: false, msg: "Choisis d'abord un animal de compagnie dans La ménagerie." };
+  if ((DAILY.kibbles || 0) <= 0) return { ok: false, msg: "Aucune croquette disponible : réussis 5 bonnes réponses aujourd'hui pour en gagner une !" };
+  const c = petCare(compId);
+  const tk = todayKey();
+  if (c.lastFedDay === tk) return { ok: false, msg: "Tu as déjà donné la croquette du jour à ce compagnon !" };
+
+  DAILY.kibbles -= 1;
+  c.lastFedDay = tk;
+  c.fedDays = (c.fedDays || 0) + 1;
+  c.happiness = Math.min(100, (c.happiness || 0) + 20);
+
+  let babyUnlocked = null;
+  if (c.fedDays >= 5 && !c.babyId) {
+    const parent = ANIMAL_BY_ID[compId];
+    const baby = parent ? findBabyForParent(parent) : null;
+    if (baby) {
+      c.babyId = baby.id;
+      if (!PET.got.includes(baby.id)) PET.got.push(baby.id);
+      babyUnlocked = baby;
+    }
+  }
+  save(K_DAILY, DAILY);
+  save(K_PET, PET);
+  if (babyUnlocked) {
+    return { ok: true, msg: `🍼 Après 5 jours de croquettes, ton compagnon a eu un bébé : ${babyUnlocked.em} ${babyUnlocked.name} ! Il est à ses côtés et dans La ménagerie.` };
+  }
+  return { ok: true, msg: `🍖 Croquette donnée ! Bonheur : ${c.happiness} % (${c.fedDays}/5 jour(s) vers un bébé).` };
+}
+
+function syncPetDay() {
+  const tk = todayKey();
+  if (PET.dayKey !== tk) {
+    PET.dayKey = tk;
+    PET.dayCount = 0;
+    save(K_PET, PET);
+  }
+}
+syncPetDay();
+
+function recordAnimalProgress(isGood) {
+  if (!isGood) return null;
+  syncPetDay();
+  PET.goodSincePet += 1;
+  let unlocked = null;
+  if (PET.goodSincePet >= PET.targetGood) {
+    PET.goodSincePet = 0;
+    PET.targetGood = randomTarget();
+    if (PET.dayCount < 3) {
+      const pool = ANIMALS.filter(a => !PET.got.includes(a.id));
+      if (pool.length) {
+        unlocked = pool[Math.floor(Math.random() * pool.length)];
+        PET.got.push(unlocked.id);
+        PET.dayCount += 1;
+        petCare(unlocked.id);
+        if (!PET.companion) PET.companion = unlocked.id;
+      }
+    }
+  }
+  save(K_PET, PET);
+  return unlocked;
+}
+
+function renderTabs(active) {
+  $("#tabs").innerHTML = TABS.map(t => {
+    const s = stats(questionsOf(t.id));
+    return `<a href="#/${t.id}" class="${t.id === active ? "on" : ""}">${t.label} <span class="small">${s.done}/${s.total}</span></a>`;
+  }).join("");
+  $("#tabs").classList.toggle("hidden", !active);
+}
+
+function progressBlock(s) {
+  return `<div class="stack" role="img" aria-label="${s.ok} réussis, ${s.ko} échoués, ${s.todo} restants">
+      <div class="g" style="width:${pct(s.ok, s.total)}%"></div><div class="r" style="width:${pct(s.ko, s.total)}%"></div></div>
+    <div class="legend"><span><i style="background:var(--ok)"></i>${s.ok} réussis</span><span><i style="background:var(--ko)"></i>${s.ko} échoués</span><span><i style="background:var(--todo)"></i>${s.todo} restants</span></div>`;
+}
+
+function dailyBannerHtml() {
+  syncDailyState();
+  syncPetDay();
+  const remDaily = Math.max(0, 5 - DAILY.todayGood);
+  const eqArt = DAILY.equipped.tableau ? DAILY_BY_ID[DAILY.equipped.tableau] : null;
+  return `<section class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+      <div>
+        <b>🔥 Série : ${plural(DAILY.streak, "jour")} d'affilée · 🍖 ${DAILY.kibbles || 0} croquette(s)</b>
+        <div class="small">Aujourd'hui : ${DAILY.todayGood}/5 bonnes réponses (cadeau + 1 croquette ${remDaily ? `dans ${remDaily}` : "obtenus ✔"}) · Animaux aujourd'hui : ${PET.dayCount}/3 · Prochain dans ${Math.max(1, PET.targetGood - PET.goodSincePet)} bonne(s) réponse(s)</div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <a class="btn sm" href="#/menagerie">🐾 Ménagerie (${PET.got.length}/${ANIMALS.length})</a>
+        <a class="btn sm" href="#/corps">🧍 Corps</a>
+      </div>
+    </div>
+    ${eqArt ? `<div class="art-frame"><b>${eqArt.ico} Tableau exposé : ${esc(eqArt.name)}</b> <span class="small">— ${esc(eqArt.artist || "")}</span><div class="small">${esc(eqArt.desc)}</div></div>` : ""}
+  </section>`;
+}
+
+function viewTab(tab) {
+  const t = TABS.find(x => x.id === tab) || TABS[0];
+  const list = questionsOf(t.id), s = stats(list);
+  const len = SET.len;
+  const msg = MSG; MSG = "";
+  const pool = (k) => {
+    const n = k === "ok" ? s.ok : k === "ko" ? s.ko : s.todo;
+    return `<button class="pool ${k}" data-act="start" data-tab="${t.id}" data-pool="${k}" ${n ? "" : "disabled"}>
+      <span class="n">${n}</span><span class="t"><b>${POOLS[k].label}</b><span class="small">${POOLS[k].hint}</span></span><span aria-hidden="true">›</span></button>`;
+  };
+  return `
+  ${t.id === "g" ? dailyBannerHtml() : ""}
+  <section class="card">
+    <h2>${t.id === "g" ? "Toutes les structures" : t.label}</h2>
+    <p class="big">${s.done} QCM sur ${s.total} réalisés, ${s.ok} réussis, ${s.ko} échoués</p>
+    ${progressBlock(s)}
+    <div class="chips" role="group" aria-label="Région">${Object.entries(REG_LABEL).map(([k, v]) =>
+      `<button data-act="reg" data-reg="${k}" class="${SET.reg === k ? "on" : ""}">${v}</button>`).join("")}</div>
+  </section>
+  ${msg ? `<div class="card small">${esc(msg)}</div>` : ""}
+  ${t.id === "g" ? `<a class="card lvcard" href="#/corps">${lvBlock()}<span aria-hidden="true">🧍›</span></a>` : ""}
+  <div class="pools">${pool("ko")}${pool("todo")}${pool("ok")}</div>
+  <a class="btn primary revbtn" href="#/rev/${t.id}">📖 Révision : le cours de chaque structure${t.id === "nerf" ? " (et l'explorateur vertèbre → nerfs)" : ""}</a>
+  <section class="card" style="margin-top:12px">
+    <label for="len"><b>Nombre de QCM par série</b></label>
+    <div class="range"><input id="len" type="range" min="5" max="100" step="5" value="${Math.min(len, 100)}" data-set="len"><output id="lenOut">${len >= 100 ? "Tous" : len}</output></div>
+    <div class="small">Tout à droite = toutes les questions de la case choisie.</div>
+  </section>`;
+}
+
+function startSession(tab, pool, ids, label) {
+  let list;
+  if (ids) list = ids.map(id => BY_ID[id]).filter(Boolean);
+  else {
+    list = questionsOf(tab).filter(q => status(q) === pool);
+    shuffle(list);
+    if (pool === "ko") list.sort((a, b) => (PROG[a.id]?.t || 0) - (PROG[b.id]?.t || 0));
+  }
+  if (SET.len < 100 && !ids) list = list.slice(0, SET.len);
+  SESSION = { tab, pool, label: label || POOLS[pool].label, ids: list.map(q => q.id), pos: 0, answered: null, opts: null, ok: 0, ko: 0, streak: 0, badRun: 0, petMsg: null };
+  if (location.hash === "#/quiz") { render(); window.scrollTo(0, 0); } else location.hash = "#/quiz";
+}
+
+function viewQuiz() {
+  const S = SESSION;
+  if (!S) return `<div class="card">Aucune série en cours. <a href="#/g">Retour</a></div>`;
+  if (S.pos >= S.ids.length) {
+    const tot = S.ok + S.ko;
+    return `<section class="card"><h2>Série terminée</h2>
+      <p class="big">${S.ok} / ${tot} bonnes réponses${tot ? ` (${Math.round(S.ok / tot * 100)} %)` : ""}</p>
+      ${tot ? progressBlock({ ok: S.ok, ko: S.ko, todo: 0, total: tot }) : ""}
+      ${S.xp ? `<p class="big">✨ +${S.xp} XP gagnés pendant cette série</p>` : ""}
+      <div class="actions"><a class="btn primary" href="#/${S.tab || "g"}">Retour à l'onglet</a>
+      ${S.ko ? `<button data-act="redoKo">Refaire mes erreurs de cette série (${S.ko})</button>` : ""}</div>
+      <div class="actions">${widgetBtn().replace("btn primary", "btn")}</div></section>`;
+  }
+  const q = BY_ID[S.ids[S.pos]];
+  if (!S.opts) {
+    if (q.m) {
+      const k = Math.min(q.m.length, 2 + Math.floor(Math.random() * 4));
+      S.opts = shuffle([...shuffle(q.m.slice()).slice(0, k), ...shuffle(q.d.slice()).slice(0, Math.max(2, 7 - k))]); S.sel = [];
+    } else S.opts = shuffle([q.a, ...shuffle(q.d.slice()).slice(0, 3)]);
+  }
+  const f = D.fiches[q.s];
+  const ans = S.answered;
+  const opts = S.opts.map((o, i) => {
+    let cls = "";
+    if (q.m) {
+      const on = S.sel.includes(i), g = q.m.includes(o);
+      if (ans != null) cls = g ? "good" : (on ? "bad" : "dim"); else if (on) cls = "sel";
+      const mark = ans != null ? (g && on ? "✔" : g ? "!" : on ? "✘" : "") : (on ? "☑" : "☐");
+      return `<button class="opt ${cls}" data-act="toggle" data-i="${i}" aria-pressed="${on}" ${ans != null ? "disabled" : ""}><span class="k">${mark}</span><span>${esc(cap(o))}${ans != null && g && !on ? " <i>(oubliée)</i>" : ""}</span></button>`;
+    }
+    if (ans != null) cls = o === q.a ? "good" : (i === ans ? "bad" : "dim");
+    return `<button class="opt ${cls}" data-act="answer" data-i="${i}" ${ans != null ? "disabled" : ""}><span class="k">${"ABCD"[i]}</span><span>${esc(cap(o))}</span></button>`;
+  }).join("");
+  let after = "";
+  if (ans != null) {
+    const good = q.m ? S.good : S.opts[ans] === q.a;
+    after = `<div class="verdict ${good ? "ok" : "ko"}">${good ? "✔ Bonne réponse" : "✘ Mauvaise réponse"}${S.gain ? `<span class="xp">+${S.gain} XP</span>` : ""}${S.streak >= 3 ? `<span class="streak">🔥 ${S.streak} d'affilée</span>` : ""}</div>
+      ${S.petMsg ? `<div class="pet-say"><span class="av">${S.petMsg.em}</span><div><b>${esc(S.petMsg.name)} :</b> « ${esc(S.petMsg.text)} »</div></div>` : ""}
+      ${(S.fresh || []).map(r => `<a class="unlock" href="#/corps">${r.ico}<span><b>Débloqué : ${esc(r.name)} !</b><span class="small">${esc(ZONES[r.z])} réussie à ${Math.round(TIERS[r.tierIdx] * 100)} % · Voir mon corps ›</span></span></a>`).join("")}
+      ${S.petGot ? `<a class="unlock animal" href="#/menagerie">${S.petGot.em}<span><b>Nouvel animal : ${esc(S.petGot.name)} !</b><span class="small">Ajouté à ta ménagerie · Choisir comme compagnon ›</span></span></a>` : ""}
+      ${S.gotKibble ? `<a class="unlock daily" href="#/corps">🍖<span><b>+1 Croquette du jour gagnée !</b><span class="small">Donne-la à ton compagnon d'étude dans Mon corps ›</span></span></a>` : ""}
+      ${S.dailyGot ? `<a class="unlock daily" href="#/corps">${S.dailyGot.ico}<span><b>Cadeau du jour (5 bonnes réponses) : ${esc(S.dailyGot.name)} !</b><span class="small">${esc(S.dailyGot.desc)} · Série : ${DAILY.streak} j ›</span></span></a>` : ""}
+      ${S.lvUp ? `<a class="unlock" href="#/corps">🎉<span><b>Niveau ${S.lvUp} !</b><span class="small">Nouveau titre : ${esc(title(S.lvUp))}</span></span></a>` : ""}
+      ${good ? "" : `<div class="expl"><b>Réponse attendue :</b> ${esc(cap(q.m ? S.opts.filter(o => q.m.includes(o)).join(" ; ") : q.a))}</div>`}
+      ${q.m && q.m.length > S.opts.filter(o => q.m.includes(o)).length ? `<div class="expl"><b>Liste complète du cours :</b> ${esc(q.a)}</div>` : ""}
+      ${q.x ? `<div class="expl">${esc(q.x)}</div>` : ""}
+      <div class="small" style="margin-top:8px">📄 Source : ${esc(srcText(q.src))}</div>
+      ${f ? `<details><summary>Fiche complète : ${esc(cap(q.s))}</summary>${trajets(q.s)}${ficheList(f)}${palpaBlocks(f)}
+        ${f.imgs && f.imgs.length ? `<details><summary>📑 Photos du cours (${f.imgs.length})</summary><div class="pics big">${imgTags(f.imgs)}</div></details>` : ""}</details>` : ""}
+      <div class="actions">
+        <button class="primary" data-act="next" id="nextBtn">${S.pos + 1 < S.ids.length ? "Question suivante →" : "Voir le bilan"}</button>
+        <button class="flag ${FLAGS[q.id] ? "on" : ""}" data-act="flag">${FLAGS[q.id] ? "🚩 Signalée" : "🚩 Signaler une erreur"}</button>
+      </div>`;
+  }
+  return `<div class="qhead"><span class="small">${esc(S.label)} · ${S.pos + 1} / ${S.ids.length}</span>
+      <button class="flag" data-act="stop">Arrêter</button></div>
+    <section class="card">
+      <span class="tag">${CAT_LABEL[q.c]}${norm(q.a) === norm(q.s) && ans == null ? "" : " · " + esc(cap(q.s))}</span>
+      <div class="qtext">${esc(q.q)}</div>
+      ${q.img ? `<div class="pics">${imgTags(q.img)}</div>` : ""}
+      ${q.m ? `<div class="small" style="margin:6px 0">☑ Plusieurs bonnes réponses : coche-les toutes, puis valide.</div>` : ""}
+      <div class="opts">${opts}</div>
+      ${q.m && ans == null ? `<div class="actions"><button class="primary" data-act="valid" id="nextBtn" ${S.sel.length ? "" : "disabled"}>Valider (${S.sel.length})</button></div>` : ""}
+      ${after}
+    </section>`;
+}
+
+function ficheList(f) {
+  return `<ul class="facts">${f.facts.map(([k, v]) => `<li><b>${esc(k)}</b>${esc(v)}</li>`).join("")}</ul>
+    <div class="small" style="margin-top:6px">📄 ${f.src.map(s => esc(srcText(s))).join(" · ")}</div>`;
+}
+
+function viewFiches(query) {
+  const qn = norm(query || "");
+  const names = Object.keys(D.fiches).filter(n => (SET.reg === "all" || D.fiches[n].reg === SET.reg) && (!qn || norm(n).includes(qn)))
+    .sort((a, b) => a.localeCompare(b, "fr"));
+  const groups = {};
+  for (const n of names) (groups[D.fiches[n].cat] ||= []).push(n);
+  const dotFor = n => {
+    const s = stats(QS.filter(q => q.s === n));
+    const c = s.ko ? "var(--ko)" : s.todo ? "var(--todo)" : "var(--ok)";
+    return `<span class="small">${s.done}/${s.total}<span class="dot" style="background:${c}"></span></span>`;
+  };
+  return `<section class="card"><h2>Fiches des structures</h2>
+      <p class="small">Toutes les informations de tes cours, structure par structure. Touche une fiche pour la lire ou t'interroger dessus.</p>
+      <input type="search" id="search" placeholder="Rechercher (ex. médian, fémur, trapèze…)" value="${esc(query || "")}">
+      <div class="chips">${Object.entries(REG_LABEL).map(([k, v]) => `<button data-act="reg" data-reg="${k}" class="${SET.reg === k ? "on" : ""}">${v}</button>`).join("")}</div>
+    </section>
+    ${["muscle", "nerf", "ligament", "artic", "os", "autre", "palpa"].filter(c => groups[c]).map(c => `<section class="card"><h2>${CAT_PLURAL[c]} (${groups[c].length})</h2>
+      <div class="list">${groups[c].map(n => `<a href="#/fiche/${encodeURIComponent(n)}"><span>${esc(cap(n))}</span>${dotFor(n)}</a>`).join("")}</div></section>`).join("")
+    || `<div class="card small">Aucune structure trouvée.</div>`}`;
+}
+
+function palpaBlocks(f) {
+  return (f.palpa || []).map(b => `<div class="palpa"><b>🖐 Palpation${b.titre && norm(b.titre) !== norm(f._name || "") ? " – " + esc(b.titre) : ""}</b>
+    <div>${esc(b.how)}</div><div class="small">📄 ${esc(srcText(b.src))}</div>
+    ${b.imgs && b.imgs.length ? `<div class="pics">${imgTags(b.imgs)}</div>` : ""}</div>`).join("");
+}
+const PART_OF = D.partOf || {};
+const bare = s => norm(s.replace(/\s*\(.*?\)/g, ""));
+function trajets(name) {
+  const want = [name, ...(PART_OF[name] || [])].map(bare), out = [];
+  for (const n of Object.values(D.nerfs)) for (const m of n.muscles || []) if (want.includes(bare(m.n))) {
+    let cur = n, src = n.rac ? n : null, txt = cap(n.nom);
+    while (cur.parent) { txt += " → " + (cur.kind || "branche") + " de : "; cur = D.nerfs[cur.parent]; txt += cur.nom; if (!src && cur.rac) src = cur; }
+    txt += src ? " → vient de " + src.rac + (src === n ? "" : " (racines de : " + src.nom + ")") : " → racines non précisées dans le cours";
+    out.push([m.n, txt]);
+  }
+  return out.length ? `<ul class="facts">${out.map(([m, x]) => `<li><b>Trajet nerveux – ${esc(m)}</b>${esc(x)}</li>`).join("")}</ul>` : "";
+}
+function ficheBody(name) {
+  const f = D.fiches[name];
+  if (!f) return "";
+  f._name = name;
+  const qs = QS.filter(q => q.s === name), s = stats(qs);
+  return `${trajets(name)}${f.facts.length ? ficheList(f) : ""}
+    ${palpaBlocks(f)}
+    ${f.imgs && f.imgs.length ? `<details ${f.cat === "nerf" ? "" : "open"}><summary>📑 Pages de tes cours (${f.imgs.length})</summary><div class="pics big">${imgTags(f.imgs)}</div></details>` : ""}
+    ${qs.length ? `<p class="small" style="margin-top:12px">${s.done} QCM sur ${s.total} réalisés, ${s.ok} réussis, ${s.ko} échoués</p>${progressBlock(s)}
+    <div class="actions"><button class="primary" data-act="ficheQuiz" data-name="${esc(name)}">M'interroger sur cette structure (${qs.length})</button></div>` : ""}`;
+}
+function viewFiche(name) {
+  const f = D.fiches[name];
+  if (!f) return `<div class="card">Fiche introuvable. <a href="#/fiches">Retour</a></div>`;
+  const back = TABS.some(t => t.cat === f.cat) ? `#/rev/${f.cat}` : "#/fiches";
+  return `<p><a href="${back}">← Révision ${esc(CAT_PLURAL[f.cat] || "")}</a></p>
+    <section class="card"><span class="tag">${CAT_LABEL[f.cat]} · ${REG_LABEL[f.reg] || ""}</span>
+      <h2 style="margin-top:8px">${esc(cap(name))}</h2>${webImg(f)}${ficheBody(name)}</section>`;
+}
+
+function viewRev(tab, query) {
+  const t = TABS.find(x => x.id === tab) || TABS[0];
+  const qn = norm(query || "");
+  let names;
+  if (t.cat === "palpa") names = [...new Set((D.palpas || []).map(p => D.fiches[p.nom] ? p.nom : null).filter(Boolean)
+    .concat(Object.keys(D.fiches).filter(n => D.fiches[n].cat === "palpa")))];
+  else names = Object.keys(D.fiches).filter(n => !t.cat || D.fiches[n].cat === t.cat);
+  names = names.filter(n => (SET.reg === "all" || D.fiches[n].reg === SET.reg || !D.fiches[n].reg) && (!qn || norm(n).includes(qn)))
+    .sort((a, b) => a.localeCompare(b, "fr"));
+  const dot = n => { const s = stats(QS.filter(q => q.s === n)); const c = !s.total ? "transparent" : s.ko ? "var(--ko)" : s.todo ? "var(--todo)" : "var(--ok)"; return `<span class="small">${s.total ? s.done + "/" + s.total : ""}<span class="dot" style="background:${c}"></span></span>`; };
+  const nerf = t.cat === "nerf" ? `<section class="card"><h2>Explorateur : vertèbre → nerfs</h2>
+      <p class="small">Choisis un niveau : tu verras tous les nerfs qui en naissent, avec leurs collatérales et leurs terminales.</p>
+      <div class="levels">${D.levels.map(l => `<a href="#/vert/${l}">${l}</a>`).join("")}</div>
+      <p class="small" style="margin-top:10px">Plexus : ${Object.entries(D.nerfs).filter(([id, n]) => !n.parent && (id.startsWith("plexus") || id.startsWith("branches"))).map(([id, n]) => `<a href="#/nx/${id}">${esc(n.nom)}</a>`).join(" · ")}</p>
+      <p class="small">Nerfs crâniens : ${Object.entries(D.nerfs).filter(([id]) => /^[IVX]+$/.test(id)).map(([id, n]) => `<a href="#/nx/${id}">${esc(id)}</a>`).join(" · ")}</p></section>` : "";
+  return `<p><a href="#/${t.id}">← ${esc(t.label)}</a></p>${nerf}
+    <section class="card"><h2>Révision : ${esc(t.id === "g" ? "toutes les structures" : t.label)} (${names.length})</h2>
+      <input type="search" id="search" data-tab="${t.id}" placeholder="Rechercher…" value="${esc(query || "")}">
+      <div class="chips">${Object.entries(REG_LABEL).map(([k, v]) => `<button data-act="reg" data-reg="${k}" class="${SET.reg === k ? "on" : ""}">${v}</button>`).join("")}</div>
+      <div class="list">${names.map(n => `<a href="#/fiche/${encodeURIComponent(n)}"><span>${esc(cap(n))}</span>${dot(n)}</a>`).join("") || `<p class="small">Aucune structure.</p>`}</div>
+    </section>`;
+}
+
+function viewVert(lv) {
+  const list = Object.entries(D.nerfs).filter(([, n]) => (n.lv || []).includes(lv))
+    .sort((a, b) => (a[1].parent ? 1 : 0) - (b[1].parent ? 1 : 0) || a[1].nom.localeCompare(b[1].nom, "fr"));
+  return `<p><a href="#/rev/nerf">← Révision Nerfs</a></p>
+    <section class="card"><h2>Explorateur : vertèbre → nerfs</h2>
+      <div class="levels">${D.levels.map(l => `<a href="#/vert/${l}" class="${l === lv ? "on" : ""}">${l}</a>`).join("")}</div></section>
+    <section class="card"><h2>Nerfs issus de ${esc(lv)} (${list.length})</h2>
+      <div class="list">${list.map(([id, n]) => `<a href="#/nx/${id}"><span>${esc(cap(n.nom))}${n.parent ? ` <span class="small">(${esc(n.kind || "branche")} de ${esc(D.nerfs[n.parent].nom)})</span>` : ""}</span>
+        <span class="small">${esc(n.rac || (n.herite ? "via " + n.herite : ""))}</span></a>`).join("") || `<p class="small">Aucun nerf décrit dans tes cours pour ce niveau.</p>`}</div></section>`;
+}
+
+function nerveCard(id, withLink) {
+  const n = D.nerfs[id];
+  const mus = (n.muscles || []).map(m => `<li><b>${esc(m.n)}</b>${m.a ? esc(m.a) : `<span class="small">Action non décrite dans tes cours de myologie</span>`}</li>`).join("");
+  return `<h2 style="margin-top:4px">${esc(cap(n.nom))}</h2>
+    <ul class="facts">
+      <li><b>Origine (racines)</b>${esc(n.rac || (n.herite ? "Comme le " + n.herite + " (non précisé)" : "Non précisé dans le cours"))}</li>
+      ${n.parent ? `<li><b>Naît de</b>${esc(D.nerfs[n.parent].nom)} (${esc(n.kind || "branche")})</li>` : ""}
+      ${n.sens ? `<li><b>Territoire sensitif</b>${esc(n.sens)}</li>` : ""}
+      ${n.fct ? `<li><b>Fonction</b>${esc(n.fct)}</li>` : ""}
+    </ul>
+    ${mus ? `<h3 style="margin:12px 0 4px;font-size:.95rem">Muscles innervés et leurs actions</h3><ul class="facts">${mus}</ul>` : ""}
+    ${withLink ? `<div class="actions"><a class="btn" href="#/nx/${id}">Explorer ce nerf →</a></div>` : ""}`;
+}
+
+function viewNx(id, kind, sub) {
+  const n = D.nerfs[id];
+  if (!n) return `<div class="card">Nerf introuvable. <a href="#/rev/nerf">Retour</a></div>`;
+  const kids = (n.children || []).map(c => [c, D.nerfs[c]]);
+  const col = kids.filter(([, c]) => c.kind === "collatérale"), ter = kids.filter(([, c]) => c.kind === "terminale");
+  const k = kind || (col.length ? "c" : "t");
+  const shown = k === "c" ? col : ter;
+  const lvLinks = (n.lv || []).map(l => `<a href="#/vert/${l}">${l}</a>`).join(" ");
+  const f = D.fiches[n.fiche];
+  return `<p><a href="${n.parent ? "#/nx/" + n.parent : "#/rev/nerf"}">← ${n.parent ? esc(D.nerfs[n.parent].nom) : "Révision Nerfs"}</a> ${lvLinks ? `<span class="small"> · niveaux : ${lvLinks}</span>` : ""}</p>
+    <section class="card"><span class="tag">Nerf</span>${nerveCard(id, false)}</section>
+    ${kids.length ? `<section class="card">
+      <div class="subtabs"><a href="#/nx/${id}/c" class="${k === "c" ? "on" : ""}">Collatérales (${col.length})</a><a href="#/nx/${id}/t" class="${k === "t" ? "on" : ""}">Terminales (${ter.length})</a></div>
+      <div class="list">${shown.map(([cid, c]) => `<a href="#/nx/${id}/${k}/${cid}" style="${cid === sub ? "font-weight:700;color:var(--accent)" : ""}"><span>${esc(cap(c.nom))}</span><span class="small">${esc(c.rac || "")}</span></a>`).join("") || `<p class="small">Aucune dans le cours.</p>`}</div>
+      ${sub && D.nerfs[sub] ? `<div class="palpa" style="margin-top:12px">${nerveCard(sub, true)}</div>` : ""}
+    </section>` : ""}
+    <section class="card"><h2>Description complète${f ? "" : " (cours)"}</h2>
+      ${f ? ficheBody(n.fiche) : ""}
+      ${n.imgs && n.imgs.length && !(f && f.imgs && f.imgs.length) ? `<div class="pics big">${imgTags(n.imgs)}</div>` : ""}
+    </section>`;
+}
+
+function viewSettings() {
+  const all = stats(QS), nf = Object.keys(FLAGS).length;
+  const msg = MSG; MSG = "";
+  const bySrc = {};
+  for (const q of QS) if (q.src) bySrc[q.src[0]] = (bySrc[q.src[0]] || 0) + 1;
+  return `<section class="card"><h2>Ma progression</h2>
+      <p>${all.done} QCM sur ${all.total} réalisés, ${all.ok} réussis, ${all.ko} échoués.</p>${progressBlock(all)}
+      <p class="small">Ta progression est enregistrée uniquement sur ce téléphone. Exporte-la de temps en temps pour ne pas la perdre.</p>
+      <div class="actions"><button class="primary" data-act="export">Exporter ma progression</button><button data-act="import">Importer</button>
+      <input type="file" id="importFile" accept="application/json,.json" class="hidden"></div>
+      <div class="msg">${esc(msg)}</div></section>
+    <section class="card"><h2>📲 Widget Android</h2>
+      <p class="small">Les réponses données sur le widget arrivent ici quand tu touches « ↻ Envoyer à l'appli » sur le widget. Dans l'autre sens, ce bouton envoie ta progression au widget.</p>
+      <div class="actions">${widgetBtn()}</div></section>
+    <section class="card"><h2>Questions signalées (${nf})</h2>
+      <p class="small">Si une question te paraît fausse, touche « 🚩 Signaler une erreur » après y avoir répondu. Tu retrouves la liste ici pour la faire corriger.</p>
+      ${nf ? `<div class="list">${Object.keys(FLAGS).map(id => BY_ID[id]).filter(Boolean).map(q => `<a href="#/fiche/${encodeURIComponent(q.s)}"><span>${esc(q.q)}</span><span class="small">${esc(q.s)}</span></a><button class="flag" data-act="fixQ" data-id="${q.id}">✏ Corriger la question ou la réponse</button>`).join("")}</div>
+      <div class="actions"><button data-act="flagQuiz">Revoir ces questions</button><button data-act="copyFlags">Copier la liste</button></div>` : ""}
+    </section>
+    <section class="card"><h2>Sources utilisées</h2>
+      <p class="small">Toutes les réponses viennent de ces cours (le numéro de page est donné après chaque question) :</p>
+      <ul class="facts">${Object.entries(D.sources).map(([k, v]) => `<li>${esc(v)} <span class="small">— ${bySrc[k] || 0} questions</span></li>`).join("")}</ul>
+      <p class="small">Banque générée le ${esc(D.version)} · ${QS.length} QCM · ${Object.keys(D.fiches).length} fiches.</p></section>
+    <section class="card"><h2>Images hors ligne</h2>
+      <p class="small">Les images se chargent quand tu ouvres une fiche. Touche ce bouton une fois, avec internet, pour les avoir toutes hors ligne (environ 45 Mo).</p>
+      <button data-act="dlImgs">Télécharger toutes les images</button></section>
+    <section class="card"><h2>Recommencer à zéro</h2>
+      <p class="small">Efface toute ta progression (les questions restent).</p>
+      <button class="danger" data-act="reset">Effacer ma progression</button></section>`;
+}
+
+const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+const ZONES = {
+  tete: "Tête", cou: "Cou", epaule: "Épaule", thorax: "Thorax", bras: "Bras", coude: "Coude", abdomen: "Abdomen",
+  avantbras: "Avant-bras", dos: "Dos et colonne", main: "Poignet et main", bassin: "Bassin et hanche", cuisse: "Cuisse",
+  genou: "Genou", jambe: "Jambe", pied: "Cheville et pied"
+};
+const ZRULES = [
+  ["main", /\b(main|mains|poignet|carp|scaphoide|lunatum|semi-lunaire|triquetrum|pyramidal|pisiforme|trapeze \(os\)|trapezoide|capitatum|grand os|hamatum|crochu|metacarp|phalang|doigt|pouce|index|auriculaire|majeur|thenar|hypothenar|lombricaux|interosseux (palmaires|dorsaux de la main)|tabatiere|retinaculum des (flechisseurs|extenseurs) \(poignet\)|canal carpien|loge de guyon|radio-carp|styloide)/],
+  ["pied", /\b(pied|cheville|talus|astragale|calcane|naviculaire|cuboide|cuneiforme|metatars|orteil|hallux|plantaire|tarse|tarsien|malleol|talo-crural|tibio-tarsien|achille|calcaneen|lisfranc|chopart|pedieux|sinus du tarse|retinaculum des (flechisseurs|extenseurs|fibulaires)|interosseux (plantaires|dorsaux du pied)|carre plantaire|sesamoide|retromalleol|subtalaire|sous-talaire|sustentacul|bifurque)/],
+  ["genou", /\b(genou|patella|patellaire|rotule|menisque|croise|poplite|tibio-femoral|femoro-patellaire|femoro-tibial|plateau tibial|patte d'oie|hoffa|condyle|coques condyliennes|intercondylaire|infra-condylaire|tuberosite tibiale|fabella|bourse pre)/],
+  ["jambe", /\b(tibia|tibial|fibula|fibulaire|perone|jambe|triceps sural|gastrocnemien|jumeaux de la jambe|soleaire|plantaire grele|long extenseur des orteils|long flechisseur des orteils|long extenseur de l'hallux|long flechisseur de l'hallux|crural|sural|mollet|tibio-fibulaire|membrane interosseuse de la jambe|saphene)/],
+  ["cuisse", /\b(femur|femoral|cuisse|quadriceps|vaste|sartorius|couturier|adducteur|ischio-jambier|biceps femoral|semi-tendineux|semi-membraneux|gracile|droit interne|tenseur du fascia lata|fascia lata|tractus ilio-tibial|bandelette|sciatique|scarpa|pectine|ligne apre|hunter|obturateur? ?nerf)/],
+  ["bassin", /\b(bassin|pelvi|hanche|coxo|coxal|fessier|glute|piriforme|pyramidal du bassin|obturat|jumeau|gemell|carre femoral|psoas|iliaque|ilio|acetabul|cotyle|trochanter|sacr|coccy|pubi|ischi|symphyse|plexus lombaire|plexus sacral|plexus pudendal|pudendal|ligament inguinal|inguinal|perinee|anal|anus|honteux|surface auriculaire|obture|epine iliaque|crete iliaque|ails)/],
+  ["coude", /\b(coude|olecran|epicondyl|epitrochle|trochlee|capitulum|condyle humeral|huméro-ulnaire|humero-ulnaire|humero-radial|radio-ulnaire proximal|tete radiale|anconé|anconee|ancone|fossette (coronoide|olecranienne)|processus coronoide|tuberosite bicipitale|bourse olecranienne)/],
+  ["avantbras", /\b(avant-bras|radius|radial|ulna|ulnaire|cubital|pronateur|supinateur|flechisseur|extenseur|brachio-radial|long supinateur|palmaire|supinat|long abducteur du pouce|court extenseur du pouce|membrane interosseuse|radio-ulnaire|union des os)/],
+  ["bras", /\b(bras|humer|biceps|triceps|brachial|coraco-brachial|musculo-cutane|sillon du nerf radial|velpeau|quadrilatere|triangle (humero-tricipital|omo-tricipital))/],
+  ["epaule", /\b(epaule|scapula|omoplate|clavicul|acromi|deltoid|coiffe|supra-epineux|sus-epineux|infra-epineux|sous-epineux|subscapulaire|sous-scapulaire|petit rond|grand rond|gleno|scapulo|axillaire|aisselle|creux axillaire|coraco|conoide|trapezoide \(ligament\)|subclavier|sous-clavier|elevateur de la scapula|rhomboide|dentele anterieur|grand dentele|petit pectoral|plexus brachial|thoracique long|suprascapulaire|sus-scapulaire|dorsal de la scapula|thoraco-dorsal|triangle des ronds|sterno-claviculaire|subclavi)/],
+  ["tete", /\b(crane|cranien|tete|face\b|faciale?\b|mandibul|maxill|temporal|occipital|frontal|parietal|sphenoid|ethmoid|zygoma|orbit|oeil|œil|oculo|nasal|nez|bouche|langue|machoire|masseter|pterygoid|temporo-mandibulaire|atm|hypoglosse|trijumeau|olfactif|optique|trochleaire|abducens|vestibulo|glosso-pharyngien|vague|nerf accessoire|foramen jugulaire|suboccipital|sous-occipital|sous occipital|petit droit posterieur|grand droit posterieur|oblique (superieur|inferieur) de la tete|occiput|mastoid|front|cuir chevelu|ophtalmique|foramen magnum|basilaire|menton)/],
+  ["cou", /\b(cou\b|cervica|atlanto|atloido|axoid|odonto|nucal|tectoria|grand auriculaire|supra-claviculaire|nuque|sterno-cleido|scm|scalene|hyoid|larynx|thyroid|trachee|atlas|axis|c[1-7]\b|plexus cervical|phrenique|jugulaire|carotid|splenius|elevateur|semi-epineux de la tete|longissimus de la tete|long du cou|long de la tete|platysma)/],
+  ["thorax", /\b(thorax|thorac|cote|costal|costo|sternum|sternal|xiphoid|manubrium|intercost|pector|mammaire|diaphragm|sein|poumon|coeur|aorte thoracique|subcostal|transverse du thorax)/],
+  ["abdomen", /\b(abdom|abdominal|oblique|droit de l'abdomen|grand droit|transverse de l'abdomen|pyramidal de l'abdomen|ligne blanche|ombilic|nombril|aorte abdominale|rectus|gaine des droits|arcade de senac|carre des lombes|ilio-hypogastrique|ilio-inguinal|genito-femoral)/],
+  ["dos", /\b(dos\b|trapeze(?! \(os\))|intervertebr|paravertebr|masse commune|dentele postero|supraepineux|promontoire|mamillaire|dorsal|vertebr|rachis|colonne|spinal|spinaux|epineu|lombaire|lombal|lombes|disque|anneau fibreux|nucleus|noyau pulpeux|interepineux|intertransversaire|multifide|transversaire|longissimus|ilio-costal|iliocostal|erecteur|grand dorsal|latissimus|thoraco-lombaire|lombo-sacre|jaune|ligament longitudinal|ligaments? (jaunes|supra-epineux|interepineux)|zygapophys|articulaire|t1[0-2]?\b|t[2-9]\b|l[1-5]\b|th[0-9]+)/],
+];
+const Z_REG = { main: "ms", avantbras: "ms", coude: "ms", bras: "ms", epaule: "ms ax", abdomen: "ax", pied: "mi", jambe: "mi", genou: "mi", cuisse: "mi" };
+const Z_FALLBACK = { ms: "bras", mi: "cuisse", ax: "dos" };
+const ZONE_OF = {}, ZQ = {};
+for (const q of QS) {
+  let z = null;
+  for (const t of [norm(q.s), norm(q.q)]) {
+    for (const [k, re] of ZRULES) if ((!Z_REG[k] || Z_REG[k].includes(q.r)) && re.test(t)) { z = k; break; }
+    if (z) break;
+  }
+  z = z || Z_FALLBACK[q.r] || "dos";
+  ZONE_OF[q.id] = z; (ZQ[z] ||= []).push(q);
+}
+function zstat(z) { const s = stats(ZQ[z] || []); s.m = s.total ? s.ok / s.total : 0; return s; }
+
+const TIERS = Array.from({ length: 20 }, (_, i) => (i + 1) * 0.05);
+
+const G = "url(#gold)", GD = "#a16207";
+const star = (x, y, k, c) => `<path transform="translate(${x} ${y}) scale(${k})" d="M0,-5 l1.5,3.1 3.4,.5 -2.5,2.4 .6,3.4 -3,-1.6 -3,1.6 .6,-3.4 -2.5,-2.4 3.4,-.5z" fill="${c}"/>`;
+const pearls = d => `<path d="${d}" fill="none" stroke="#a8a29e" stroke-width="4.4" stroke-dasharray="0.01 4" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#fafaf9" stroke-width="3.2" stroke-dasharray="0.01 4" stroke-linecap="round"/>`;
+const shoe = (fill, st) => `<path d="M73.5,395 L92,395 Q95.5,409 90.5,418 Q78,424 67.5,419 Q65,409 73.5,395 Z" fill="${fill}" stroke="${st}" stroke-width="1.2"/>`;
+const shoeP = (fill, st) => `<path d="M88,395 L104,395 Q108,404 123,408 Q129,413 124,419 L88,419 Q84,408 88,395 Z" fill="${fill}" stroke="${st}" stroke-width="1.2"/>`;
+const heart = (x, y, k, c) => `<path transform="translate(${x} ${y}) scale(${k})" d="M0,-3 C0,-8 -7,-8 -7,-2.5 C-7,2 0,6 0,8.5 C0,6 7,2 7,-2.5 C7,-8 0,-8 0,-3 Z" fill="${c}" stroke="#fff" stroke-width=".8"/>`;
+
+const LEGACY_REWARDS = [
+  { z: "tete", name: "Lunettes de soleil", ico: "😎", f: `<g fill="#111827"><rect x="84" y="32" width="13" height="9" rx="3.5"/><rect x="103" y="32" width="13" height="9" rx="3.5"/></g><path d="M97,35 h6 M84,35 L78,33 M116,35 L122,33" stroke="#111827" stroke-width="1.6"/>`, b: null,
+    p: `<rect x="110" y="32" width="11" height="9" rx="3.5" fill="#111827"/><path d="M110,35 L97,36" stroke="#111827" stroke-width="1.6"/>` },
+  { z: "tete", name: "Casque audio", ico: "🎧", f: `<path d="M77,42 Q76,8 100,8 Q124,8 123,42" fill="none" stroke="#ec4899" stroke-width="4" stroke-linecap="round"/><rect x="71" y="33" width="10" height="17" rx="4" fill="#ec4899"/><rect x="119" y="33" width="10" height="17" rx="4" fill="#ec4899"/>`,
+    p: `<path d="M95,36 Q94,11 107,12" fill="none" stroke="#ec4899" stroke-width="4" stroke-linecap="round"/><ellipse cx="95" cy="41" rx="6.5" ry="9" fill="#ec4899"/>` },
+  { z: "tete", name: "Couronne", ico: "👑", l: 3, f: `<path d="M83,17 L82,3 L91,10 L100,0 L109,10 L118,3 L117,17 Z" fill="${G}" stroke="${GD}" stroke-width="1.2" stroke-linejoin="round"/><circle cx="100" cy="11" r="2" fill="#ef4444"/><circle cx="89" cy="13" r="1.4" fill="#38bdf8"/><circle cx="111" cy="13" r="1.4" fill="#38bdf8"/>` },
+  { z: "cou", name: "Collier de perles", ico: "📿", f: pearls("M90,76 Q100,88 110,76"), b: pearls("M90,74 Q100,78 110,74"), p: pearls("M92,74 Q100,84 108,78") },
+  { z: "cou", name: "Foulard", ico: "🧣", f: `<path d="M88,66 Q100,74 112,66 L113,77 Q100,85 87,77 Z" fill="#ef4444"/><path d="M103,78 L111,98 L101,95 Z" fill="#dc2626"/>`,
+    b: `<path d="M88,66 Q100,72 112,66 L113,77 Q100,81 87,77 Z" fill="#ef4444"/>`, p: `<path d="M90,66 L108,66 L110,78 L88,78 Z" fill="#ef4444"/><path d="M106,76 L113,94 L104,92 Z" fill="#dc2626"/>` },
+  { z: "cou", name: "Médaille d'or", ico: "🏅", l: 3, f: `<path d="M92,64 L100,92 L108,64" fill="none" stroke="#2563eb" stroke-width="3"/><circle cx="100" cy="98" r="7.5" fill="${G}" stroke="${GD}" stroke-width="1.2"/>${star(100, 98, .9, GD)}`,
+    b: `<path d="M92,66 Q100,72 108,66" fill="none" stroke="#2563eb" stroke-width="3"/>`, p: `<path d="M97,64 L112,90" stroke="#2563eb" stroke-width="3"/><circle cx="114" cy="96" r="6" fill="${G}" stroke="${GD}"/>` },
+  { z: "epaule", pair: 1, name: "Bandes de kinésio", ico: "🩹", f: `<path d="M58,84 Q66,96 60,114" fill="none" stroke="#ec4899" stroke-width="4" stroke-linecap="round"/><path d="M72,86 Q62,98 54,110" fill="none" stroke="#f472b6" stroke-width="4" stroke-linecap="round"/>` },
+  { z: "epaule", pair: 1, name: "Épaulière", ico: "🛡️", f: `<path d="M49,96 Q52,80 70,81 Q78,84 77,92 Q64,90 52,101 Z" fill="#475569" stroke="#1e293b" stroke-width="1.2"/>` },
+  { z: "epaule", pair: 1, name: "Épaulettes dorées", ico: "⭐", l: 3, f: `<path d="M51,86 Q62,78 76,84 L76,90 Q62,85 51,92 Z" fill="${G}" stroke="${GD}"/><path d="M52,92 v6 M56,90 v7 M60,89 v7 M64,88 v7 M68,88 v7 M72,89 v6" stroke="#eab308" stroke-width="1.5" stroke-linecap="round"/>` },
+  { z: "thorax", name: "Débardeur", ico: "🎽", l: 1, f: `<path d="M74,88 L82,86 Q100,100 118,86 L126,88 Q131,120 130,152 L70,152 Q69,120 74,88 Z" fill="#38bdf8"/>`,
+    b: `<path d="M74,88 L82,86 Q100,92 118,86 L126,88 Q131,120 130,152 L70,152 Q69,120 74,88 Z" fill="#38bdf8"/>`, p: `<path d="M86,88 L112,88 Q121,110 120,152 L84,152 Q79,120 86,88 Z" fill="#38bdf8"/>` },
+  { z: "thorax", name: "Cœur qui brille", ico: "❤️", f: heart(88, 96, 1, "#ef4444"), b: null, p: heart(114, 100, .8, "#ef4444") },
+  { z: "thorax", name: "Emblème de super-héroïne", ico: "🦸", l: 3, f: `<path d="M84,108 L116,108 L122,117 L100,142 L78,117 Z" fill="${G}" stroke="${GD}" stroke-width="1.5"/><text x="100" y="128" font-size="15" font-weight="800" text-anchor="middle" fill="#b91c1c" font-family="system-ui,sans-serif">A</text>`,
+    b: null, p: `<path d="M113,106 L120,108 L121,132 L113,136 Z" fill="${G}" stroke="${GD}"/>` },
+  { z: "bras", pair: 1, name: "Brassard de sport", ico: "🎵", f: `<path d="M47.5,118 L63,119 L62.6,129 L47.2,128 Z" fill="#0ea5e9"/><rect x="51" y="120" width="8" height="7" rx="1" fill="#0c4a6e"/>` },
+  { z: "bras", pair: 1, name: "Tatouage cœur", ico: "💘", f: heart(55, 141, .75, "#e11d48") },
+  { z: "bras", pair: 1, name: "Bras de championne", ico: "💪", l: 3, f: `<text x="26" y="134" font-size="14">💪</text><text x="32" y="112" font-size="9">✨</text>` },
+  { z: "coude", pair: 1, name: "Pansement", ico: "🩹", f: `<g transform="rotate(-25 54 164)"><rect x="47" y="160.5" width="14" height="7" rx="3" fill="#fcd34d" stroke="#d97706" stroke-width=".8"/><rect x="52" y="161.5" width="4" height="5" fill="#fde68a"/></g>` },
+  { z: "coude", pair: 1, name: "Coudière", ico: "🛹", f: `<rect x="44" y="156" width="20" height="16" rx="6" fill="#111827"/><rect x="47" y="161" width="14" height="6" rx="3" fill="#ec4899"/>` },
+  { z: "coude", pair: 1, name: "Coudière en diamant", ico: "💎", l: 3, f: `<rect x="44" y="156" width="20" height="16" rx="6" fill="#a5f3fc" stroke="#0891b2" stroke-width="1.2"/><path d="M54,158.5 l4.5,5.5 -4.5,5.5 -4.5,-5.5z" fill="#fff" stroke="#0891b2" stroke-width=".8"/>` },
+  { z: "abdomen", name: "Ceinture", ico: "🪢", f: `<rect x="70" y="193" width="60" height="7" fill="#78350f"/><rect x="95.5" y="192" width="9" height="9" rx="1.5" fill="none" stroke="#facc15" stroke-width="2"/>`,
+    b: `<rect x="70" y="193" width="60" height="7" fill="#78350f"/>`, p: `<rect x="83" y="193" width="36" height="7" fill="#78350f"/>` },
+  { z: "abdomen", name: "Piercing au nombril", ico: "✨", f: `<circle cx="100" cy="181" r="2.3" fill="#38bdf8" stroke="#fff" stroke-width=".8"/>`, b: null, p: `<circle cx="120.5" cy="181" r="2" fill="#38bdf8" stroke="#fff" stroke-width=".6"/>` },
+  { z: "abdomen", name: "Étoile d'abdos", ico: "🌟", l: 3, f: `${star(100, 174, 1.3, "#facc15")}`, b: null },
+  { z: "avantbras", pair: 1, name: "Bracelets brésiliens", ico: "🧶", f: `<path d="M44.8,207.5 L58,208.5" stroke="#a855f7" stroke-width="2.5"/><path d="M44.5,212 L57.5,213" stroke="#f97316" stroke-width="2.5"/><path d="M44.6,216.5 L57,217.5" stroke="#22c55e" stroke-width="2.5"/>` },
+  { z: "avantbras", name: "Montre", ico: "⌚", limb: 1, f: `<rect x="42.5" y="209" width="16" height="9" rx="2" fill="#1f2937"/><circle cx="50.5" cy="213.5" r="3.4" fill="#e5e7eb" stroke="#1f2937"/><path d="M50.5,213.5 v-2 M50.5,213.5 h1.6" stroke="#1f2937" stroke-width=".7"/>` },
+  { z: "avantbras", pair: 1, name: "Manchettes dorées", ico: "⚡", l: 3, f: `<path d="M44,194 L60,194 L58.5,220 L44.5,220 Z" fill="${G}" stroke="${GD}" stroke-width="1.2"/><path d="M51.5,201 l2.2,4.5 -2.2,4.5 -2.2,-4.5z" fill="#ef4444"/>` },
+  { z: "dos", name: "Sac à dos", ico: "🎒", f: `<path d="M80,86 Q78,110 80,140 M120,86 Q122,110 120,140" fill="none" stroke="#15803d" stroke-width="4" stroke-linecap="round"/>`,
+    b: `<rect x="78" y="96" width="44" height="52" rx="10" fill="#22c55e" stroke="#15803d" stroke-width="1.5"/><rect x="85" y="122" width="30" height="18" rx="5" fill="#16a34a"/><path d="M92,104 h16" stroke="#15803d" stroke-width="2" stroke-linecap="round"/>`,
+    p: `<rect x="64" y="96" width="21" height="50" rx="7" fill="#22c55e" stroke="#15803d" stroke-width="1.5"/><path d="M92,86 Q100,110 94,140" fill="none" stroke="#15803d" stroke-width="3.5"/>` },
+  { z: "dos", pair: 1, name: "Tatouage ailes", ico: "🪽", f: null, b: `<path d="M97,112 Q86,96 72,100 Q78,105 80,108 Q72,110 74,116 Q82,116 84,118 Q80,124 86,126 Q92,122 97,118 Z" fill="none" stroke="#3730a3" stroke-width="1.3"/>` },
+  { z: "dos", name: "Cape de super-héroïne", ico: "🦸‍♀️", l: 4, fu: `<path d="M72,84 L128,84 L150,258 Q100,266 50,258 Z" fill="#b91c1c"/>`, f: `<path d="M78,86 L92,80 M122,86 L108,80" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/><circle cx="100" cy="81" r="2.5" fill="#facc15"/>`,
+    b: `<path d="M74,84 L126,84 L148,258 Q100,268 52,258 Z" fill="#dc2626"/><path d="M86,84 L114,84" stroke="#b91c1c" stroke-width="3"/>`, pu: `<path d="M90,84 Q66,170 56,262 L80,258 Q86,170 98,86 Z" fill="#dc2626"/>`, p: "" },
+  { z: "main", pair: 1, name: "Vernis à ongles", ico: "💅", f: `<g fill="#e11d48" stroke="#fff" stroke-width=".4"><ellipse cx="43.8" cy="251" rx="1.7" ry="2"/><ellipse cx="47.5" cy="255.2" rx="1.7" ry="2"/><ellipse cx="51.8" cy="256.2" rx="1.7" ry="2"/><ellipse cx="55.5" cy="252.6" rx="1.7" ry="2"/><ellipse cx="58.4" cy="239" rx="1.6" ry="1.9"/></g>` },
+  { z: "main", pair: 1, name: "Bague", ico: "💍", f: `<circle cx="48.5" cy="248" r="2.6" fill="none" stroke="#facc15" stroke-width="1.6"/><circle cx="48.5" cy="245.4" r="1.5" fill="#67e8f9" stroke="#0891b2" stroke-width=".5"/>` },
+  { z: "main", pair: 1, name: "Gants dorés", ico: "🧤", l: 3, f: `<path d="M43.5,222 Q39,240 42.5,252.5 Q50,261 56.5,252.5 Q61,240 57.5,222 Z" fill="${G}" stroke="${GD}" stroke-width="1.2"/><path d="M47,252 v-8 M51.5,254 v-9 M55,251 v-7" stroke="${GD}" stroke-width=".8"/>` },
+  { z: "bassin", name: "Short de sport", ico: "🩳", l: 1, f: `<path d="M70,200 L130,200 Q135,225 133,262 L104,262 L100,244 L96,262 L67,262 Q65,225 70,200 Z" fill="#3730a3"/><path d="M71,207 L129,207" stroke="#fff" stroke-width="1.5" opacity=".6"/>`,
+    p: `<path d="M83,203 L117,203 Q121,232 116,262 L86,262 Q80,232 83,203 Z" fill="#3730a3"/>` },
+  { z: "bassin", name: "Banane", ico: "👝", f: `<path d="M70,207 Q100,214 130,207" fill="none" stroke="#9a3412" stroke-width="2"/><rect x="86" y="205" width="28" height="14" rx="7" fill="#f97316" stroke="#9a3412"/><path d="M90,210 h20" stroke="#9a3412"/>`,
+    b: `<path d="M70,207 Q100,212 130,207" fill="none" stroke="#9a3412" stroke-width="2"/>`, p: `<rect x="112" y="204" width="12" height="15" rx="5" fill="#f97316" stroke="#9a3412"/>` },
+  { z: "bassin", name: "Ceinture de championne", ico: "🥊", l: 3, f: `<rect x="68" y="195" width="64" height="11" rx="3" fill="#7f1d1d"/><ellipse cx="100" cy="200.5" rx="14" ry="10" fill="${G}" stroke="${GD}" stroke-width="1.5"/>${star(100, 201, 1.1, GD)}`,
+    b: `<rect x="68" y="195" width="64" height="11" rx="3" fill="#7f1d1d"/>`, p: `<rect x="82" y="195" width="38" height="11" rx="3" fill="#7f1d1d"/><ellipse cx="119" cy="200.5" rx="4" ry="9" fill="${G}"/>` },
+  { z: "cuisse", pair: 1, name: "Bandes de kinésio", ico: "🩹", f: `<path d="M80,262 Q86,282 82,304" fill="none" stroke="#22c55e" stroke-width="4" stroke-linecap="round"/><path d="M90,262 Q84,282 88,304" fill="none" stroke="#4ade80" stroke-width="4" stroke-linecap="round"/>` },
+  { z: "cuisse", pair: 1, name: "Jarretière à nœud", ico: "🎀", f: `<path d="M72,298 Q85,303 96.5,298" fill="none" stroke="#ec4899" stroke-width="3.2"/><path d="M84,301 l-6,-3.5 0,7z M84,301 l6,-3.5 0,7z" fill="#ec4899"/><circle cx="84" cy="301" r="1.8" fill="#be185d"/>` },
+  { z: "cuisse", pair: 1, name: "Éclairs de sprinteuse", ico: "⚡", l: 3, f: `<path d="M64,258 L57,274 L63,274 L56,292 L69,270 L63,270 L69,258 Z" fill="#facc15" stroke="${GD}" stroke-width=".8"/>` },
+  { z: "genou", pair: 1, name: "Pansement", ico: "🩹", f: `<rect x="78" y="317" width="13" height="7" rx="3" fill="#fcd34d" stroke="#d97706" stroke-width=".8" transform="rotate(15 84.5 320.5)"/>` },
+  { z: "genou", pair: 1, name: "Genouillère stylée", ico: "🦵", f: `<rect x="71.5" y="311" width="26" height="21" rx="8" fill="#111827"/><circle cx="84.5" cy="321.5" r="5.5" fill="none" stroke="#a855f7" stroke-width="2.5"/><path d="M74,314 h21 M74,329 h21" stroke="#a855f7" stroke-width="1.4"/>` },
+  { z: "genou", pair: 1, name: "Genouillère en or", ico: "🏆", l: 3, f: `<rect x="71.5" y="311" width="26" height="21" rx="8" fill="${G}" stroke="${GD}" stroke-width="1.2"/>${star(84.5, 321.5, 1.1, GD)}` },
+  { z: "jambe", pair: 1, name: "Chaussettes rayées", ico: "🧦", f: `<path d="M74.5,368 L93,368 Q91,384 89.5,400 L76.5,400 Q75,384 74.5,368 Z" fill="#fff" stroke="#e5e7eb" stroke-width=".6"/><path d="M74.8,373 h18 M75.3,381 h16.5 M75.9,389 h15 M76.3,396 h13.6" stroke="#ef4444" stroke-width="3"/>` },
+  { z: "jambe", pair: 1, name: "Jambières", ico: "🩰", f: `<path d="M72.5,340 Q71,362 74,382 L94,382 Q96,362 95.5,340 Z" fill="#c084fc"/><path d="M73,346 h22 M72.6,352 h23 M72.5,358 h23 M72.7,364 h23 M73,370 h22 M73.5,376 h21" stroke="#a855f7" stroke-width="1"/>` },
+  { z: "jambe", pair: 1, name: "Protège-tibias de pro", ico: "⚽", l: 3, f: `<path d="M77.5,334 L92.5,334 Q93,356 89,374 Q84.5,379 80,374 Q76.5,356 77.5,334 Z" fill="#0ea5e9" stroke="#0369a1" stroke-width="1.2"/>${star(85, 346, 1, "#fff")}` },
+  { z: "pied", pair: 1, name: "Vernis à ongles", ico: "💅", f: `<g fill="#e11d48" stroke="#fff" stroke-width=".4"><circle cx="71" cy="416" r="1.3"/><circle cx="74.8" cy="418.4" r="1.4"/><circle cx="78.8" cy="419.3" r="1.5"/><circle cx="82.8" cy="418.6" r="1.6"/><circle cx="86.8" cy="416.4" r="2"/></g>`,
+    b: null, p: `<ellipse cx="123.2" cy="413.5" rx="1.6" ry="2.4" fill="#e11d48"/>` },
+  { z: "pied", pair: 1, name: "Baskets", ico: "👟", f: `${shoe("#f8fafc", "#334155")}<path d="M67,416 Q79,422.5 91.5,416" fill="none" stroke="#ef4444" stroke-width="2.6"/><path d="M78,400 h9 M77.5,404 h10" stroke="#334155"/>`,
+    p: `${shoeP("#f8fafc", "#334155")}<path d="M87,416 L126,416" stroke="#ef4444" stroke-width="2.6"/>` },
+  { z: "pied", pair: 1, name: "Baskets ailées dorées", ico: "🪽", l: 3, f: `${shoe(G, GD)}<path d="M68,404 Q56,396 51,402 Q57,404 56,407 Q51,407 51,411 Q60,410 68,410 Z" fill="#fff" stroke="${GD}"/>`,
+    p: `${shoeP(G, GD)}<path d="M89,402 Q76,394 71,400 Q77,402 76,405 Q71,405 71,409 Q80,408 89,408 Z" fill="#fff" stroke="${GD}"/>` }
+];
+
+const EXTRA_POOL = [
+  ["Ruban", "🎀"], ["Étoile", "⭐"], ["Plume", "🪶"], ["Cristal", "💠"], ["Flamme", "🔥"],
+  ["Éclair", "⚡"], ["Badge", "🏅"], ["Ruban soie", "🎗️"], ["Trèfle", "🍀"], ["Diamant", "💎"],
+  ["Comète", "☄️"], ["Rose", "🌹"], ["Couronne mini", "👑"], ["Bouclier", "🛡️"], ["Saphir", "🔵"],
+  ["Ambre", "🟠"], ["Émeraude", "🟢"]
+];
+
+function extraSvg(z, vue, idx) {
+  const col = `hsl(${(idx * 53) % 360} 82% 55%)`;
+  const pos = {
+    tete: [100, 22], cou: [100, 74], epaule: [60, 88], thorax: [100, 114], bras: [54, 128],
+    coude: [54, 164], abdomen: [100, 175], avantbras: [52, 206], dos: [100, 118], main: [50, 242],
+    bassin: [100, 218], cuisse: [84, 276], genou: [84, 321], jambe: [83, 362], pied: [80, 408]
+  }[z] || [100, 140];
+  let [x, y] = pos;
+  if (vue === "p") x = Math.min(122, x + 12);
+  if (vue === "b") x = z === "dos" ? 100 : (x < 100 ? 200 - x : x);
+  if (vue === "p") return `<circle cx="${x}" cy="${y}" r="5.5" fill="${col}" stroke="#fff" stroke-width="1.2"/>`;
+  if (vue === "b") return `<rect x="${x - 6}" y="${y - 5}" width="12" height="10" rx="4" fill="${col}" stroke="#fff" stroke-width="1.2"/>`;
+  return `<circle cx="${x}" cy="${y}" r="5.5" fill="${col}" stroke="#fff" stroke-width="1.2"/>`;
+}
+
+function buildRewards() {
+  const out = [];
+  const legacyByZone = {};
+  for (const r of LEGACY_REWARDS) (legacyByZone[r.z] ||= []).push(r);
+  const tierForLegacy = [1, 9, 19];
+  const viewsCycle = ["f", "p", "b"];
+
+  for (const z of Object.keys(ZONES)) {
+    const leg = legacyByZone[z] || [];
+    let extraIdx = 0;
+    for (let ti = 0; ti < TIERS.length; ti++) {
+      const pctLabel = (ti + 1) * 5;
+      const legPos = tierForLegacy.indexOf(ti);
+      if (legPos !== -1 && leg[legPos]) {
+        const base = leg[legPos];
+        out.push({ ...base, id: `${z}${legPos}`, tierIdx: ti, pctLabel });
+      } else {
+        const [baseName, ico] = EXTRA_POOL[(extraIdx + Object.keys(ZONES).indexOf(z) * 3) % EXTRA_POOL.length];
+        const vue = viewsCycle[ti % 3];
+        const vueLabel = vue === "f" ? "Face" : vue === "p" ? "Profil" : "Dos";
+        const svg = extraSvg(z, vue, extraIdx);
+        out.push({
+          id: `${z}_p${pctLabel}`,
+          z, tierIdx: ti, pctLabel,
+          name: `${baseName} (${vueLabel} ${pctLabel}%)`,
+          ico,
+          f: vue === "f" ? svg : null,
+          p: vue === "p" ? svg : null,
+          b: vue === "b" ? svg : null
+        });
+        extraIdx++;
+      }
+    }
+  }
+  return out;
+}
+
+const REWARDS = buildRewards();
+const R_BY = Object.fromEntries(REWARDS.map(r => [r.id, r]));
+const PX = { epaule: 36, bras: 46, coude: 46, avantbras: 48, main: 52, cuisse: 14, genou: 13.5, jambe: 14 };
+
+const K_BODY = "revanat-corps-v1";
+let BODY = load(K_BODY, {});
+BODY.got ||= []; BODY.eq ||= {};
+let ZSEL = null;
+const has = r => BODY.got.includes(r.id);
+const isEq = r => has(r) && BODY.eq[r.id] !== false;
+
+function syncUnlocks() {
+  const fresh = [];
+  for (const r of REWARDS) {
+    if (!has(r) && zstat(r.z).m >= TIERS[r.tierIdx] - 1e-9) {
+      BODY.got.push(r.id);
+      fresh.push(r);
+    }
+  }
+  if (fresh.length) save(K_BODY, BODY);
+  return fresh;
+}
+if (!BODY.init) { syncUnlocks(); BODY.init = 1; save(K_BODY, BODY); }
+
+const xp = () => {
+  let n = 0; for (const id in PROG) n += PROG[id].ok || 0;
+  return n * 10 + BODY.got.length * 50 + PET.got.length * 40 + DAILY.got.length * 35;
+};
+const need = L => 50 * L * (L - 1);
+const level = x => { let L = 1; while (need(L + 1) <= x) L++; return L; };
+const TITLES = [[1, "Première année"], [3, "Palpeuse en herbe"], [5, "Chasseuse d'insertions"], [8, "Dompteuse de nerfs"], [11, "Reine des ligaments"], [14, "Maîtresse du plexus"], [18, "Légende de l'anat"], [22, "Kiné d'or 🏆"]];
+const title = L => TITLES.filter(t => L >= t[0]).pop()[1];
+
+function zcol(z) {
+  const s = zstat(z);
+  if (!s.done || s.m <= 0) return "#e6dcc8";
+  if (s.m >= 1 - 1e-9) return "#16a34a";
+  const hue = Math.round(Math.max(0, Math.min(1, s.m)) * 275);
+  return `hsl(${hue} 82% 54%)`;
+}
+
+const BODY_F = {
+  C: [["cou", "path", 'd="M91,62 L109,62 L111,84 L89,84 Z"'],
+      ["thorax", "path", 'd="M72,84 Q100,78 128,84 Q134,90 134,100 L130,150 L70,150 L66,100 Q66,90 72,84 Z"'],
+      ["abdomen", "path", 'd="M70,150 L130,150 Q127,175 129,200 L71,200 Q73,175 70,150 Z"'],
+      ["bassin", "path", 'd="M71,200 L129,200 Q134,218 132,240 L100,246 L68,240 Q66,218 71,200 Z"']],
+  L: [["cuisse", "path", 'd="M70,236 L99,238 Q99,280 95,312 L74,312 Q68,280 70,236 Z"'],
+      ["jambe", "path", 'd="M74,328 Q71,360 77,399 L89,399 Q96,360 95,328 Z"'],
+      ["genou", "ellipse", 'cx="84.5" cy="321" rx="11.5" ry="10"'],
+      ["pied", "path", 'd="M76,397 L90,397 Q92,410 88,416 Q78,421 70,417 Q68,410 76,397 Z"'],
+      ["bras", "path", 'd="M50,100 Q46,130 47,158 L61,160 Q63,130 64,104 Z"'],
+      ["avantbras", "path", 'd="M46,169 Q43,200 45,223 L57,224 Q60,200 62,169 Z"'],
+      ["coude", "ellipse", 'cx="54" cy="164" rx="8.5" ry="8"'],
+      ["main", "path", 'd="M44,223 Q40,240 43,252 Q50,260 56,252 Q60,240 57.5,223 Z"'],
+      ["epaule", "ellipse", 'cx="64" cy="94" rx="14" ry="12"']],
+  T: [["tete", "ellipse", 'cx="100" cy="40" rx="22" ry="27"']]
+};
+const BODY_B = { C: [BODY_F.C[0], ["dos", "path", 'd="M72,84 Q100,78 128,84 Q134,90 134,100 L130,150 Q127,175 129,200 L71,200 Q73,175 70,150 L66,100 Q66,90 72,84 Z"'], BODY_F.C[3]], L: BODY_F.L, T: BODY_F.T };
+const BODY_P = { C: [["cou", "path", 'd="M92,60 L106,60 L108,84 L90,84 Z"'],
+      ["dos", "path", 'd="M100,84 L88,84 Q80,100 82,130 Q84,150 80,175 Q78,192 84,205 L100,205 Z"'],
+      ["thorax", "path", 'd="M100,84 L110,84 Q122,98 120,150 L100,150 Z"'],
+      ["abdomen", "path", 'd="M100,150 L120,150 Q125,178 116,205 L100,205 Z"'],
+      ["bassin", "path", 'd="M84,205 L116,205 Q121,225 115,243 L83,243 Q77,222 84,205 Z"'],
+      ["cuisse", "path", 'd="M83,240 L115,240 Q114,280 108,312 L88,312 Q81,280 83,240 Z"'],
+      ["jambe", "path", 'd="M89,328 Q81,355 91,399 L102,399 Q106,360 109,328 Z"'],
+      ["genou", "ellipse", 'cx="98" cy="320" rx="11.5" ry="10"'],
+      ["pied", "path", 'd="M90,397 L102,397 Q106,406 122,410 Q126,416 118,418 L90,418 Q86,410 90,397 Z"'],
+      ["bras", "path", 'd="M93,100 Q92,130 94,158 L106,158 Q108,130 107,100 Z"'],
+      ["avantbras", "path", 'd="M94,168 Q94,195 97,222 L107,222 Q109,195 107,168 Z"'],
+      ["coude", "ellipse", 'cx="100" cy="163" rx="8" ry="7.5"'],
+      ["main", "path", 'd="M96,221 Q94,240 99,250 Q106,252 108,240 Q108,230 107,221 Z"'],
+      ["epaule", "ellipse", 'cx="100" cy="94" rx="12" ry="11"']],
+  L: [], T: [["tete", "path", 'd="M100,13 C114,13 122,24 121,36 L127,46 L121,48 Q121,62 104,67 Q79,68 79,40 Q79,13 100,13 Z"']] };
+const MIRROR = s => `<g transform="matrix(-1 0 0 1 200 0)">${s}</g>`;
+
+function hairSvg(hairId, v) {
+  if (!hairId) return "";
+  if (v === "p") {
+    if (hairId === "hair-bun") return `<circle cx="82" cy="18" r="7" fill="#78350f"/>`;
+    if (hairId === "hair-ponytail") return `<path d="M80,26 Q62,22 58,42" fill="none" stroke="#78350f" stroke-width="5" stroke-linecap="round"/>`;
+    return `<path d="M92,14 L104,6 L112,15" fill="none" stroke="#78350f" stroke-width="4" stroke-linecap="round"/>`;
+  }
+  if (hairId === "hair-bun") return `<circle cx="100" cy="11" r="8" fill="#78350f"/>`;
+  if (hairId === "hair-ponytail") return `<path d="M100,14 Q124,14 128,36" fill="none" stroke="#78350f" stroke-width="4.5" stroke-linecap="round"/>`;
+  if (hairId === "hair-spiky") return `<path d="M84,18 L88,7 L96,15 L100,5 L105,15 L113,7 L116,18" fill="none" stroke="#78350f" stroke-width="3.5" stroke-linecap="round"/>`;
+  return `<path d="M78,34 Q78,12 100,12 Q122,12 122,34" fill="none" stroke="#78350f" stroke-width="4.5" stroke-linecap="round"/>`;
+}
+
+function accSvg(r, v) {
+  let s = v === "p" ? r.p : v === "b" ? r.b : r.f;
+  if (v === "p" && s === undefined) s = PX[r.z] != null ? `<g transform="translate(${PX[r.z]} 0)">${r.f}</g>` : null;
+  if (v === "b" && s === undefined) s = r.f;
+  if (!s) return "";
+  if (v !== "p" && r.pair) return s + MIRROR(s);
+  if (v === "b" && r.limb) return MIRROR(s);
+  return s;
+}
+
+function bodySvg(v) {
+  const B = v === "b" ? BODY_B : v === "p" ? BODY_P : BODY_F;
+  const shape = (z, tag, a) => `<${tag} ${a} class="bz" data-act="zone" data-z="${z}" fill="${zcol(z)}"></${tag}>`;
+  const raw = ps => ps.filter(p => p[0] === ZSEL).map(([z, t, a]) => `<${t} ${a}/>`).join("");
+  const selL = raw(B.L), sel = raw(B.C) + raw(B.T) + selL + (selL ? MIRROR(selL) : "");
+  const body = B.C.map(p => shape(...p)).join("") + B.L.map(p => shape(...p)).join("") + MIRROR(B.L.map(p => shape(...p)).join("")) + B.T.map(p => shape(...p)).join("");
+  const deco = v === "f" ? `<circle cx="92" cy="38" r="2.2" fill="#1c1f33"/><circle cx="108" cy="38" r="2.2" fill="#1c1f33"/><path d="M93,52 Q100,57 107,52" fill="none" stroke="#1c1f33" stroke-width="1.6" stroke-linecap="round"/>`
+    : v === "b" ? `<path d="M100,88 V198" stroke="rgba(0,0,0,.25)" stroke-width="1.5" stroke-dasharray="2 4" stroke-linecap="round"/>`
+    : `<circle cx="113" cy="37" r="2.2" fill="#1c1f33"/><path d="M114,55 Q117,56 119,54" fill="none" stroke="#1c1f33" stroke-width="1.5" stroke-linecap="round"/>`;
+  const acc = REWARDS.filter(isEq).sort((a, b) => (a.l || 2) - (b.l || 2));
+  const under = acc.map(r => v === "p" ? r.pu : v === "f" ? r.fu : "").filter(Boolean).join("");
+  const hair = hairSvg(DAILY.equipped.coiffure, v);
+  return `<svg viewBox="0 -8 200 440" role="img" aria-label="Mon corps d'anat, vue ${v === "f" ? "de face" : v === "b" ? "de dos" : "de profil"}">
+    <defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fef3c7"/><stop offset=".45" stop-color="#facc15"/><stop offset="1" stop-color="#ca8a04"/></linearGradient></defs>
+    <ellipse cx="100" cy="424" rx="58" ry="7" fill="rgba(0,0,0,.08)"/>
+    <g class="acc">${under}</g>${body}<g class="acc">${deco}${hair}${acc.map(r => accSvg(r, v)).join("")}</g>
+    <g class="acc sel">${sel}</g></svg>`;
+}
+
+const rwIcons = z => REWARDS.filter(r => r.z === z && has(r)).map(r => r.ico).join(" ");
+
+function zonePanel(z) {
+  const s = zstat(z), left = s.total - s.ok;
+  const unlockedHere = REWARDS.filter(r => r.z === z && has(r));
+  return `<section class="card" id="zpanel"><h2>${esc(ZONES[z])}</h2>
+    <p class="big">${s.ok} QCM réussis sur ${s.total} (${Math.floor(s.m * 100)} %)</p>${progressBlock(s)}
+    ${unlockedHere.length ? `<div class="rewards">${unlockedHere.map(r =>
+      `<div class="rw"><span class="ico">${r.ico}</span><span class="t"><b>${esc(r.name)}</b><span class="small">Débloqué (${r.pctLabel} %)</span></span>
+        <button class="flag" data-act="equip" data-id="${r.id}">${isEq(r) ? "Retirer" : "Mettre"}</button></div>`
+    ).join("")}</div>` : `<p class="small" style="margin-top:10px">Aucun accessoire débloqué sur cette zone pour l'instant.</p>`}
+    <div class="actions"><button class="primary" data-act="zoneQuiz" data-z="${z}" ${left ? "" : "disabled"}>${left ? `M'interroger sur cette zone (${left} à réussir)` : "Zone maîtrisée à 100 % 👑"}</button></div></section>`;
+}
+
+function lvBlock() {
+  const X = xp(), L = level(X), lo = need(L), hi = need(L + 1);
+  return `<span class="lvbadge">${L}</span><span class="t" style="flex:1"><b>Niveau ${L} · ${esc(title(L))}</b>
+    <span class="small">${X.toLocaleString("fr")} XP · encore ${(hi - X).toLocaleString("fr")} XP pour le niveau ${L + 1} · ${BODY.got.length}/${REWARDS.length} accessoires · ${PET.got.length}/${ANIMALS.length} animaux</span>
+    <div class="xpbar"><div style="width:${pct(X - lo, hi - lo)}%"></div></div></span>`;
+}
+
+function viewCorps() {
+  syncUnlocks();
+  syncDailyState();
+  syncPetDay();
+  const v = BODY.view || "f";
+  const sceneObj = DAILY.equipped.decor ? DAILY_BY_ID[DAILY.equipped.decor] : null;
+  const sceneCls = sceneObj ? `scene-${sceneObj.scene}` : "scene-none";
+  const comp = PET.companion ? ANIMAL_BY_ID[PET.companion] : null;
+  const care = comp ? petCare(comp.id) : null;
+  const baby = care && care.babyId ? ANIMAL_BY_ID[care.babyId] : null;
+  const gear = DAILY.equipped.animal_gear ? DAILY_BY_ID[DAILY.equipped.animal_gear] : null;
+  const cur = SESSION && SESSION.pos < SESSION.ids.length ? `<p><a href="#/quiz">← Reprendre ma série de QCM</a></p>` : "";
+  const msg = MSG; MSG = "";
+
+  const unlockedDaily = DAILY.got.map(id => DAILY_BY_ID[id]).filter(Boolean);
+
+  return `${cur}
+  ${msg ? `<div class="card small"><b>${esc(msg)}</b></div>` : ""}
+  <section class="card"><div class="lvrow">${lvBlock()}</div>
+    <p class="small" style="margin-top:10px">+10 XP/bonne réponse, +50 XP/accessoire (tous les 5 %), +40 XP/animal (toutes les 5 à 60 bonnes réponses, max 3/jour), +35 XP/récompense quotidienne (5 bonnes réponses/jour + 1 croquette).</p>
+    <div class="actions"><a class="btn sm" href="#/menagerie">🐾 Ouvrir la ménagerie (${PET.got.length}/${ANIMALS.length})</a></div>
+  </section>
+  <section class="card">
+    <div class="subtabs">${[["f", "Face"], ["p", "Profil"], ["b", "Dos"]].map(([k, l]) => `<a href="#/corps" data-act="bview" data-v="${k}" class="${v === k ? "on" : ""}">${l}</a>`).join("")}</div>
+    <div class="bodywrap ${sceneCls}">
+      ${sceneObj ? `<span class="scene-badge" aria-hidden="true">${sceneObj.ico}</span>` : ""}
+      ${bodySvg(v)}
+      <div class="pet-box">
+        <div class="small"><b>Mon compagnon d'étude</b></div>
+        <div class="pet-family">
+          <span class="pet-art">${comp ? comp.em : "🐾"}</span>
+          ${baby ? `<span class="pet-baby" title="Bébé : ${esc(baby.name)}">${baby.em}</span>` : ""}
+        </div>
+        <div class="pet-name">${esc(comp ? comp.name : "Aucun compagnon")}</div>
+        ${baby ? `<div class="pet-gear">🍼 Bébé : ${esc(baby.name)}</div>` : ""}
+        ${gear ? `<div class="pet-gear">${gear.ico} ${esc(gear.name)}</div>` : ""}
+        ${comp && care ? `<div class="pet-gear">Bonheur : ${care.happiness || 0} % · ${care.fedDays || 0}/5 j</div>
+          <div class="joybar" style="width:100%"><div style="width:${care.happiness || 0}%"></div></div>
+          <button class="btn sm" style="margin-top:8px" data-act="feedPet">🍖 Donner croquette (${DAILY.kibbles || 0})</button>`
+          : `<a class="btn sm" style="margin-top:8px" href="#/menagerie">Choisir</a>`}
+      </div>
+    </div>
+    <div class="legend" style="justify-content:center">
+      <span><i style="background:#e6dcc8"></i>pas travaillé / 0 %</span>
+      <span><i style="background:hsl(20 82% 54%)"></i>début</span>
+      <span><i style="background:hsl(55 82% 54%)"></i>en cours</span>
+      <span><i style="background:hsl(220 82% 54%)"></i>avancé</span>
+      <span><i style="background:#16a34a"></i>100 %</span>
+    </div>
+  </section>
+  ${unlockedDaily.length ? `<section class="card"><h2>🎁 Récompenses débloquées (${unlockedDaily.length})</h2>
+    <div class="rewards">${unlockedDaily.map(r => {
+      const active = DAILY.equipped[r.cat] === r.id;
+      return `<div class="rw"><span class="ico">${r.ico}</span><span class="t"><b>${esc(r.name)}</b><span class="small">${esc(r.desc)}</span></span>
+        <button class="flag" data-act="eqDaily" data-id="${r.id}">${active ? "Retirer" : "Utiliser"}</button></div>`;
+    }).join("")}</div></section>` : ""}
+  ${ZSEL ? zonePanel(ZSEL) : `<div class="card small" id="zpanel">👆 Touche une zone du corps (ou une ligne ci-dessous) pour voir ta progression et tes accessoires débloqués.</div>`}
+  <section class="card"><h2>Toutes les zones</h2><div class="list">${Object.keys(ZONES).map(z => {
+    const s = zstat(z);
+    return `<a href="#/corps" data-act="zone" data-z="${z}" data-from="list"><span>${esc(ZONES[z])}<br><span class="small ics">${rwIcons(z)}</span></span><span class="small">${s.ok}/${s.total}<br><b>${Math.floor(s.m * 100)} %</b></span></a>`;
+  }).join("")}</div></section>`;
+}
+
+function viewMenagerie() {
+  syncPetDay();
+  syncDailyState();
+  const comp = PET.companion ? ANIMAL_BY_ID[PET.companion] : null;
+  const care = comp ? petCare(comp.id) : null;
+  const baby = care && care.babyId ? ANIMAL_BY_ID[care.babyId] : null;
+  const speciesList = ["Tous", ...new Set(ANIMALS.map(a => a.species))];
+  const filterSp = window._petFilter || "Tous";
+  const shown = ANIMALS.filter(a => filterSp === "Tous" || a.species === filterSp);
+  const msg = MSG; MSG = "";
+
+  return `<p><a href="#/corps">← Retour à Mon corps d'anat</a></p>
+    ${msg ? `<div class="card small"><b>${esc(msg)}</b></div>` : ""}
+    <section class="card">
+      <h2>🐾 La ménagerie (${PET.got.length} / ${ANIMALS.length})</h2>
+      <p class="big">Compagnon d'étude : ${comp ? `${comp.em} ${baby ? baby.em : ""} ${esc(comp.name)}` : "Aucun choisi"}</p>
+      <p class="small">Croquettes disponibles : <b>${DAILY.kibbles || 0}</b> (1 gagnée par jour dès 5 bonnes réponses). Donne 1 croquette par jour à ton compagnon pour augmenter son bonheur (+20 %) : au bout de <b>5 jours nourris</b>, il a un <b>bébé</b> qui apparaît à ses côtés et dans la ménagerie !</p>
+      ${comp && care ? `<div class="actions">
+        <button class="primary sm" data-act="feedPet">🍖 Donner croquette (${DAILY.kibbles || 0}) · Bonheur ${care.happiness || 0} % · ${care.fedDays || 0}/5 j</button>
+      </div>` : ""}
+      <div class="chips">${speciesList.map(sp => `<button data-act="petFilter" data-sp="${esc(sp)}" class="${filterSp === sp ? "on" : ""}">${esc(sp)}</button>`).join("")}</div>
+    </section>
+    <section class="card">
+      <div class="grid2">${shown.map(a => {
+        const owned = PET.got.includes(a.id);
+        const isComp = PET.companion === a.id;
+        const c = owned ? petCare(a.id) : null;
+        return `<div class="mcard ${owned ? (isComp ? "comp" : "") : ""}">
+          <div class="top">
+            <span class="em">${owned ? a.em : "❓"}</span>
+            <div><b>${esc(owned ? a.name : "Animal mystère")}</b><span class="small">${owned ? (isComp ? `Compagnon · Bonheur ${c.happiness || 0} %` : "Débloqué") : "À découvrir en répondant juste"}</span></div>
+          </div>
+          ${owned ? `<button class="sm ${isComp ? "" : "primary"}" data-act="setComp" data-id="${a.id}">${isComp ? "Compagnon choisi" : "Choisir comme compagnon"}</button>` : ""}
+        </div>`;
+      }).join("")}</div>
+    </section>`;
+}
+
+function route() { return (location.hash || "#/g").replace(/^#\/?/, "").split("/").map(decodeURIComponent); }
+function render() {
+  const [p0, p1] = route();
+  let html, title = "Révisions anat", tab = null;
+  try {
+    if (!QS.length) html = `<div class="card">Les questions n'ont pas pu être chargées (fichier questions.js manquant).</div>`;
+    else if (TABS.some(t => t.id === p0)) { tab = p0; html = viewTab(p0); }
+    else if (p0 === "quiz") { title = "QCM"; html = viewQuiz(); }
+    else if (p0 === "fiches") { title = "Fiches"; html = viewFiches(p1 || ""); }
+    else if (p0 === "fiche") { title = "Fiche"; html = viewFiche(p1); }
+    else if (p0 === "rev") { tab = p1 || "g"; title = "Révision"; html = viewRev(p1 || "g", route()[2] || ""); }
+    else if (p0 === "vert") { title = "Vertèbre " + p1; html = viewVert(p1); }
+    else if (p0 === "nx") { const r = route(); title = "Nerf"; html = viewNx(p1, r[2], r[3]); }
+    else if (p0 === "corps") { title = "Mon corps d'anat"; html = viewCorps(); }
+    else if (p0 === "menagerie") { title = "La ménagerie"; html = viewMenagerie(); }
+    else if (p0 === "sync") { MSG = importWidget(p1 || ""); history.replaceState(null, "", "#/widget"); title = "Widget"; html = viewWidget(); }
+    else if (p0 === "widget") { title = "Widget"; html = viewWidget(); }
+    else if (p0 === "reglages") { title = "Réglages"; html = viewSettings(); }
+    else { tab = "g"; html = viewTab("g"); }
+  } catch (e) { html = `<div class="card">Erreur : ${esc(e.message)}</div>`; }
+  renderTabs(tab);
+  $("#app").innerHTML = html;
+  $("#title").textContent = title;
+  hydrateImgs();
+  if (p0 === "quiz") { const n = document.getElementById("nextBtn"); if (n) n.focus({ preventScroll: true }); }
+}
+
+function answer(i) {
+  const S = SESSION;
+  if (!S || S.answered != null) return;
+  const q = BY_ID[S.ids[S.pos]];
+  S.answered = i;
+  const good = q.m ? S.opts.every((o, j) => q.m.includes(o) === S.sel.includes(j)) : S.opts[i] === q.a;
+  S.good = good;
+  const lv0 = level(xp());
+  const p = PROG[q.id] || { n: 0, ok: 0 };
+  p.n++; if (good) p.ok++;
+  p.r = good ? 1 : 0; p.t = Date.now();
+  PROG[q.id] = p;
+  save(K_PROG, PROG);
+
+  S.fresh = syncUnlocks();
+  S.petGot = recordAnimalProgress(good);
+  const dRes = good ? recordDailyGoodAnswer() : { newReward: null, gotKibble: false };
+  S.dailyGot = dRes.newReward;
+  S.gotKibble = dRes.gotKibble;
+
+  if (good) {
+    S.streak = (S.streak || 0) + 1;
+    S.badRun = 0;
+  } else {
+    S.streak = 0;
+    S.badRun = (S.badRun || 0) + 1;
+  }
+
+  S.petMsg = null;
+  const comp = PET.companion ? ANIMAL_BY_ID[PET.companion] : null;
+  if (comp) {
+    if (!good && S.badRun === 5) {
+      const encouragements = [
+        "Ne baisse pas les bras ! Même un petit passage à vide fait partie de l'apprentissage, on avance ensemble.",
+        "Accroche-toi ! Cinq essais difficiles ne changent rien à tout ce que tu sais déjà, respire et repars.",
+        "On ne lâche rien ! Chaque erreur te montre ce qui va devenir clair à la prochaine lecture."
+      ];
+      S.petMsg = { em: comp.em, name: comp.name, text: encouragements[Math.floor(Math.random() * encouragements.length)] };
+    } else if (good && S.streak === 20) {
+      S.petMsg = { em: comp.em, name: comp.name, text: "Mon maître, c'est le plus fort !" };
+    }
+  }
+
+  S.gain = (good ? 10 : 0) + S.fresh.length * 50 + (S.petGot ? 40 : 0) + (S.dailyGot ? 35 : 0) + (S.gotKibble ? 15 : 0);
+  S.xp = (S.xp || 0) + S.gain;
+  const lv1 = level(xp()); S.lvUp = lv1 > lv0 ? lv1 : 0;
+  if (good) S.ok++; else { S.ko++; (S.wrong ||= []).push(q.id); }
+  render();
+}
+
+const ACT = {
+  zone: el => { ZSEL = ZSEL === el.dataset.z && !el.dataset.from ? null : el.dataset.z; render(); if (el.dataset.from) { const z = document.getElementById("zpanel"); if (z) z.scrollIntoView({ behavior: "smooth", block: "start" }); } },
+  bview: el => { BODY.view = el.dataset.v; save(K_BODY, BODY); render(); },
+  equip: el => { const r = R_BY[el.dataset.id]; BODY.eq[r.id] = !isEq(r); save(K_BODY, BODY); render(); },
+  eqDaily: el => {
+    const r = DAILY_BY_ID[el.dataset.id];
+    if (!r) return;
+    DAILY.equipped[r.cat] = DAILY.equipped[r.cat] === r.id ? null : r.id;
+    save(K_DAILY, DAILY);
+    render();
+  },
+  feedPet: () => {
+    const res = feedCompanionKibble();
+    MSG = res.msg;
+    render();
+  },
+  petFilter: el => { window._petFilter = el.dataset.sp; render(); },
+  setComp: el => { PET.companion = el.dataset.id; petCare(el.dataset.id); save(K_PET, PET); render(); },
+  zoneQuiz: el => {
+    const z = el.dataset.z;
+    const koList = shuffle((ZQ[z] || []).filter(q => status(q) === "ko").map(q => q.id));
+    const todoList = shuffle((ZQ[z] || []).filter(q => status(q) === "todo").map(q => q.id));
+    let l = [...koList, ...todoList];
+    if (SET.len < 100) l = l.slice(0, SET.len);
+    startSession("corps", "todo", l, "Zone : " + ZONES[z]);
+  },
+  start: el => startSession(el.dataset.tab, el.dataset.pool),
+  reg: el => { SET.reg = el.dataset.reg; save(K_SET, SET); render(); },
+  answer: el => answer(Number(el.dataset.i)),
+  toggle: el => { const S = SESSION, i = Number(el.dataset.i); if (S.answered != null) return; S.sel = S.sel.includes(i) ? S.sel.filter(x => x !== i) : [...S.sel, i]; render(); },
+  valid: () => { if (SESSION.sel.length) answer(0); },
+  dlImgs: async el => {
+    const packs = [...new Set(Object.values(D.imgs || {}))]; let ok = 0;
+    el.disabled = true;
+    for (const p of packs) { try { const r = await fetch(p + ".js"); if (r.ok) { await r.blob(); ok++; } } catch {} el.textContent = `Téléchargement… ${ok} / ${packs.length}`; }
+    el.textContent = ok === packs.length ? "✔ Toutes les images sont disponibles hors ligne" : `${packs.length - ok} fichier(s) manquant(s) : vérifie les images-XX.js sur GitHub`;
+    el.disabled = false;
+  },
+  next: () => { SESSION.pos++; SESSION.answered = null; SESSION.opts = null; SESSION.petMsg = null; render(); window.scrollTo(0, 0); },
+  stop: () => { SESSION.ids = SESSION.ids.slice(0, SESSION.pos + (SESSION.answered != null ? 1 : 0)); SESSION.pos = SESSION.ids.length; render(); },
+  redoKo: () => startSession(SESSION.tab, "ko", shuffle(SESSION.wrong.slice()), "Erreurs de la série"),
+  flag: () => { const id = SESSION.ids[SESSION.pos]; if (FLAGS[id]) delete FLAGS[id]; else FLAGS[id] = Date.now(); save(K_FLAG, FLAGS); render(); },
+  ficheQuiz: el => startSession(null, "todo", shuffle(QS.filter(q => q.s === el.dataset.name).map(q => q.id)), el.dataset.name),
+  fixQ: el => {
+    const q = BY_ID[el.dataset.id];
+    const nq = prompt("Question :", q.q); if (nq === null || !nq.trim()) return;
+    const na = prompt(q.m ? "Bonnes réponses (séparées par « ; » avec un espace de chaque côté) :" : "Bonne réponse :", q.a); if (na === null || !na.trim()) return;
+    OVR[q.id] = { q: nq.trim(), a: na.trim() }; save(K_OVR, OVR); applyOvr();
+    if (confirm("Correction enregistrée. Retirer le signalement ?")) { delete FLAGS[q.id]; save(K_FLAG, FLAGS); }
+    render();
+  },
+  flagQuiz: () => startSession(null, "todo", Object.keys(FLAGS).filter(id => BY_ID[id]), "Questions signalées"),
+  copyFlags: async () => {
+    const txt = Object.keys(FLAGS).map(id => BY_ID[id]).filter(Boolean).map(q => `- [${q.id}] ${q.q} → ${q.a}`).join("\n");
+    try { await navigator.clipboard.writeText(txt); MSG = "Liste copiée : tu peux la coller dans un message."; } catch { MSG = "Copie impossible sur ce navigateur."; }
+    render();
+  },
+  export: () => {
+    const data = { app: "revisions-anat", version: 2, exportedAt: new Date().toISOString(), progress: PROG, flags: FLAGS, corrections: OVR, body: BODY, pet: PET, daily: DAILY };
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: "application/json" }));
+    a.download = `revisions-anat-progression-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    MSG = "Fichier enregistré dans tes Téléchargements.";
+    render();
+  },
+  import: () => document.getElementById("importFile").click(),
+  reset: () => {
+    if (!confirm("Effacer toute ta progression ? C'est définitif (sauf si tu as un export).")) return;
+    PROG = {}; save(K_PROG, PROG); BODY.got = []; save(K_BODY, BODY);
+    PET = { got: [], companion: null, targetGood: randomTarget(), goodSincePet: 0, dayKey: todayKey(), dayCount: 0, care: {} }; save(K_PET, PET);
+    DAILY = { streak: 0, lastActiveDay: null, todayKey: todayKey(), todayGood: 0, todayRewardClaimed: false, kibbleEarnedToday: false, kibbles: 0, got: [], equipped: { coiffure: null, decor: null, animal_gear: null, tableau: null } }; save(K_DAILY, DAILY);
+    MSG = "Progression effacée."; render();
+  }
+};
+
+document.addEventListener("click", e => {
+  if (e.target.matches("img.pic[src]")) {
+    const z = document.createElement("div"); z.id = "zoom"; z.innerHTML = `<img src="${e.target.src}" alt="">`;
+    z.onclick = () => z.remove(); document.body.appendChild(z); return;
+  }
+  const el = e.target.closest("[data-act]");
+  if (!el || !ACT[el.dataset.act] || el.disabled) return;
+  e.preventDefault();
+  ACT[el.dataset.act](el);
+});
+document.addEventListener("input", e => {
+  if (e.target.dataset.set === "len") {
+    SET.len = Number(e.target.value); save(K_SET, SET);
+    const o = document.getElementById("lenOut"); if (o) o.textContent = SET.len >= 100 ? "Tous" : SET.len;
+  } else if (e.target.id === "search") {
+    const v = e.target.value, pos = e.target.selectionStart, tb = e.target.dataset.tab;
+    history.replaceState(null, "", (tb ? "#/rev/" + tb + "/" : "#/fiches/") + encodeURIComponent(v));
+    $("#app").innerHTML = tb ? viewRev(tb, v) : viewFiches(v);
+    const s = document.getElementById("search"); s.focus(); try { s.setSelectionRange(pos, pos); } catch {}
+  }
+});
+document.addEventListener("change", async e => {
+  if (e.target.id !== "importFile") return;
+  const f = e.target.files[0]; e.target.value = "";
+  if (!f) return;
+  try {
+    const data = JSON.parse(await f.text());
+    if (!data || data.app !== "revisions-anat" || typeof data.progress !== "object") throw new Error("ce n'est pas un export de Révisions anat");
+    if (!confirm("Remplacer ta progression actuelle par celle de ce fichier ?")) return;
+    PROG = data.progress; FLAGS = data.flags || {}; OVR = data.corrections || {};
+    if (data.body) { BODY = data.body; save(K_BODY, BODY); }
+    if (data.pet) { PET = data.pet; PET.care ||= {}; save(K_PET, PET); }
+    if (data.daily) { DAILY = data.daily; save(K_DAILY, DAILY); }
+    save(K_OVR, OVR); applyOvr(); save(K_PROG, PROG); save(K_FLAG, FLAGS);
+    MSG = "Progression importée.";
+  } catch (err) { MSG = "Import impossible : " + err.message; }
+  render();
+});
+document.addEventListener("keydown", e => {
+  if (route()[0] !== "quiz" || !SESSION || e.target.tagName === "INPUT") return;
+  const k = e.key.toUpperCase();
+  const cur = BY_ID[SESSION.ids[SESSION.pos]];
+  if (cur && cur.m && SESSION.answered == null && SESSION.opts) {
+    const n = Number(e.key) - 1;
+    if (n >= 0 && n < SESSION.opts.length) ACT.toggle({ dataset: { i: n } });
+    else if (e.key === "Enter" && e.target.tagName !== "BUTTON") { e.preventDefault(); ACT.valid(); }
+    return;
+  }
+  const i = "ABCD".indexOf(k) >= 0 ? "ABCD".indexOf(k) : "1234".indexOf(e.key);
+  if (i >= 0 && SESSION.answered == null && SESSION.opts && i < SESSION.opts.length) answer(i);
+  else if ((e.key === "Enter" || e.key === " ") && SESSION.answered != null) { e.preventDefault(); ACT.next(); }
+});
+window.addEventListener("hashchange", render);
+document.addEventListener("toggle", e => { if (e.target.open) hydrateImgs(); }, true);
+render();
+try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch {}
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+</script>
+</body>
+</html>
